@@ -1,6 +1,6 @@
 {
   "name": "@iceteaid/vital",
-  "version": "0.0.2-alpha.0",
+  "version": "0.0.3-alpha.0",
   "description": "provide share common code logic between modules",
   "author": "Tung",
   "homepage": "",
@@ -10,7 +10,7 @@
     "build": "yarn rimraf dist && yarn webpack"
   },
   "dependencies": {
-    "@iceteaid/types": "^0.0.2-alpha.0",
+    "@iceteaid/types": "^0.0.3-alpha.0",
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
