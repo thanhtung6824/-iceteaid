@@ -1,0 +1,19 @@
+{
+  "name": "@iceteaid/types",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Tung <thanhtung6824@gmail.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "yarn ts-node src/index.ts",
+    "build": "yarn rimraf dist && yarn webpack --config packages/types/webpack.config.js"
+  },
+  "devDependencies": {
+    "webpack-merge": "^5.1.4"
+  },
+  "files": [
+    "dist/*"
+  ]
+}

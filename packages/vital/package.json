@@ -1,0 +1,19 @@
+{
+  "name": "@iceteaid/vital",
+  "version": "0.0.0",
+  "description": "provide share common code logic between modules",
+  "author": "Tung",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "yarn rimraf dist && yarn webpack"
+  },
+  "dependencies": {
+    "@iceteaid/types": "0.0.0",
+    "rxjs": "^6.6.3"
+  },
+  "devDependencies": {
+    "webpack-merge": "^5.1.4"
+  }
+}

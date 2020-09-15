@@ -1,0 +1,30 @@
+{
+  "name": "iceteaid-monorepo",
+  "private": true,
+  "scripts": {
+    "bootstrap": "yarn install && lerna link",
+    "build:types": "yarn rimraf packages/types/dist && yarn webpack --config packages/types/webpack.config.js --env=types",
+    "build:vital": "yarn rimraf packages/vital/dist && yarn webpack --config packages/vital/webpack.config.js --env=vital",
+    "build:native": "yarn rimraf packages/react-native/dist && yarn webpack --config packages/react-native/webpack.config.js --env=native"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "prettier": "^2.1.1",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^8.0.3",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "@types/node": "^14.6.4",
+    "@types/react-native": "^0.63.18",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1"
+  },
+  "workspaces": {
+    "packages": ["packages/*"]
+  }
+}

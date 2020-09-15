@@ -1,0 +1,30 @@
+{
+  "name": "@iceteaid/react-native",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Tung <thanhtung6824@gmail.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "yarn ts-node src/index.ts",
+    "build": "yarn rimraf dist && yarn webpack"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-native": "^0.63.2",
+    "react-native-webview": "^10.9.0",
+    "@iceteaid/vital": "0.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "metro-react-native-babel-preset": "^0.63.0",
+    "webpack-merge": "^5.1.4",
+    "webpack-node-externals": "^2.5.2"
+  }
+}

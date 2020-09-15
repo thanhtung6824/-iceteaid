@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+//    "rootDir": "./packages",
+//    "outDir": "./dist",
+    "lib": ["es2018", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "strict": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "declaration": true,
+    "skipLibCheck": true
+  }
+//  "references": [
+//    { "path": "./packages/vital/tsconfig.json" },
+//    { "path": "./packages/types/tsconfig.json" },
+//    { "path": "./packages/react-native/tsconfig.json" }
+//  ]
+}
