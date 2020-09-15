@@ -1,6 +1,6 @@
 {
   "name": "@iceteaid/react-native",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "> TODO: description",
   "author": "Tung <thanhtung6824@gmail.com>",
   "homepage": "",
@@ -11,10 +11,10 @@
     "build": "yarn rimraf dist && yarn webpack"
   },
   "dependencies": {
+    "@iceteaid/vital": "^0.0.1-alpha.0",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
-    "react-native-webview": "^10.9.0",
-    "@iceteaid/vital": "0.0.0"
+    "react-native-webview": "^10.9.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",

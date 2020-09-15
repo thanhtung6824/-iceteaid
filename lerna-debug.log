@@ -1,19 +1,10 @@
-0 silly argv {
-0 silly argv   _: [ 'publish' ],
-0 silly argv   canary: true,
-0 silly argv   c: true,
-0 silly argv   composed: 'publish',
-0 silly argv   lernaVersion: '3.22.1',
-0 silly argv   '$0': 'lerna'
-0 silly argv }
-1 notice cli v3.22.1
-2 verbose rootPath /home/admin1/Desktop/@iceteaid
-3 info versioning independent
-4 info canary enabled
-5 verbose session fb69ad1edd648885
-6 verbose user-agent lerna/3.22.1/node@v12.18.3+x64 (linux)
-7 error Error: Command failed: git describe --always --long --dirty --first-parent
-7 error fatal: bad revision 'HEAD'
-7 error
-7 error     at makeError (/home/admin1/Desktop/@iceteaid/node_modules/execa/index.js:174:9)
-7 error     at /home/admin1/Desktop/@iceteaid/node_modules/execa/index.js:278:16
+34 error Error: Command failed: git add -- packages/types/package.json packages/types/package-lock.json packages/vital/package.json packages/vital/package-lock.json packages/react-native/package.json packages/react-native/package-lock.json
+34 error The following paths are ignored by one of your .gitignore files:
+34 error packages/react-native/package-lock.json
+34 error packages/types/package-lock.json
+34 error packages/vital/package-lock.json
+34 error Use -f if you really want to add them.
+34 error
+34 error     at makeError (/home/admin1/Desktop/@iceteaid/node_modules/execa/index.js:174:9)
+34 error     at /home/admin1/Desktop/@iceteaid/node_modules/execa/index.js:278:16
+34 error     at processTicksAndRejections (internal/process/task_queues.js:97:5)
