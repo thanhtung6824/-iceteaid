@@ -32,14 +32,14 @@ export class SdkBase {
             this._transport = new SdkConfiguration.Transporter(this.endpoint);
         }
 
-        return this._transport;
+        return <Transporter>this._transport;
     }
 
     public get iframe(): Iframe {
         if (!this._iframe) {
             this._iframe = new SdkConfiguration.Iframe(this.endpoint, this.sdkId);
         }
-        return this._iframe;
+        return <Iframe>this._iframe;
     }
 }
 type ConstructorOf<C> = { new (...args: any[]): C };
@@ -47,16 +47,16 @@ type ConstructorOf<C> = { new (...args: any[]): C };
 interface SdkConfiguration {
     target: 'web' | 'react-native';
     baseUrl: string;
-    Transporter: ConstructorOf<Transporter>,
-    Iframe: ConstructorOf<Iframe>,
+    Transporter: any,
+    Iframe: any,
 }
 
 export const SdkConfiguration: SdkConfiguration = {} as SdkConfiguration;
 
 export function sdkBuilder<Sdk extends SdkBase>(
-    IceteaIdInstance: Sdk,
+    IceteaIdInstance: ConstructorOf<Sdk>,
     configuration: SdkConfiguration,
-): Sdk {
+): ConstructorOf<Sdk> {
     Object.assign(SdkConfiguration, configuration);
     return IceteaIdInstance;
 }
