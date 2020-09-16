@@ -1,4 +1,4 @@
-import { RequestType } from 'id-type';
+import { RequestType } from 'iceteaid-type';
 
 // export function urlBuilder(url: string, baseUrl?: string): URL {
 //     return baseUrl ? new URL(url, baseUrl) : new URL(url);
