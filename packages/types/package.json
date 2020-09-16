@@ -15,5 +15,6 @@
   },
   "files": [
     "dist/*"
-  ]
+  ],
+  "gitHead": "c2a15dcaec8073245c37c436ef253376ed566523"
 }

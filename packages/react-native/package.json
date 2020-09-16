@@ -26,5 +26,6 @@
     "metro-react-native-babel-preset": "^0.63.0",
     "webpack-merge": "^5.1.4",
     "webpack-node-externals": "^2.5.2"
-  }
+  },
+  "gitHead": "c2a15dcaec8073245c37c436ef253376ed566523"
 }

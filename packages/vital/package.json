@@ -15,5 +15,6 @@
   },
   "devDependencies": {
     "webpack-merge": "^5.1.4"
-  }
+  },
+  "gitHead": "c2a15dcaec8073245c37c436ef253376ed566523"
 }
