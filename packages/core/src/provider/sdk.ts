@@ -7,8 +7,8 @@ import { AuthApi } from '../api/auth';
 export class SdkBase {
     private _transport: Transporter | undefined;
     private _iframe: Iframe | undefined;
-    private sdkId: string;
 
+    private readonly sdkId: string;
     public readonly endpoint: string;
     public readonly user: UserApi;
     public readonly auth: AuthApi;
@@ -32,32 +32,31 @@ export class SdkBase {
             this._transport = new SdkConfiguration.Transporter(this.endpoint);
         }
 
-        return <Transporter>this._transport;
+        return this._transport;
     }
 
     public get iframe(): Iframe {
         if (!this._iframe) {
             this._iframe = new SdkConfiguration.Iframe(this.endpoint, this.sdkId);
         }
-        return <Iframe>this._iframe;
+        return this._iframe;
     }
 }
+type ConstructorOf<C> = { new (...args: any[]): C };
 
 interface SdkConfiguration {
     target: 'web' | 'react-native';
     baseUrl: string;
-    Transporter: any,
-    Iframe: any,
+    Transporter: ConstructorOf<Transporter>,
+    Iframe: ConstructorOf<Iframe>,
 }
 
-type ConstructorOf<C> = { new (...args: any[]): C };
-
-export const SdkConfiguration = {} as any;
+export const SdkConfiguration: SdkConfiguration = {} as SdkConfiguration;
 
 export function sdkBuilder<Sdk extends SdkBase>(
-    IceteaIdInstance: ConstructorOf<Sdk>,
+    IceteaIdInstance: Sdk,
     configuration: SdkConfiguration,
-): ConstructorOf<Sdk> {
+): Sdk {
     Object.assign(SdkConfiguration, configuration);
     return IceteaIdInstance;
 }
