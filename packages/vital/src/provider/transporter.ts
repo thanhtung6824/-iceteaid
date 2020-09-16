@@ -2,7 +2,7 @@ import { fromEvent, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { queryBuilder, randomId } from '../helpers';
 import { SdkConfiguration } from './sdk';
-import { RequestType } from '@iceteaid/types';
+import { RequestType } from 'id-type';
 import { Iframe } from './iframe';
 
 export abstract class Transporter {

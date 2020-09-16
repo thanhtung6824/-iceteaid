@@ -1,5 +1,5 @@
 {
-  "name": "@iceteaid/vital",
+  "name": "id-vital",
   "version": "0.0.4-alpha.0",
   "description": "provide share common code logic between modules",
   "author": "Tung",
@@ -10,7 +10,7 @@
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
-    "@iceteaid/types": "^0.0.4-alpha.0"
+    "id-type": "^0.0.4-alpha.0"
   },
-  "gitHead": "c2a15dcaec8073245c37c436ef253376ed566523"
+  "gitHead": "fdd861d6b8d512f777823ca69109df645a221b0f"
 }

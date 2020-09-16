@@ -1,5 +1,5 @@
 {
-  "name": "@iceteaid/types",
+  "name": "id-type",
   "version": "0.0.4-alpha.0",
   "description": "> TODO: description",
   "author": "Tung <thanhtung6824@gmail.com>",
@@ -9,5 +9,5 @@
   "files": [
     "dist/*"
   ],
-  "gitHead": "c2a15dcaec8073245c37c436ef253376ed566523"
+  "gitHead": "fdd861d6b8d512f777823ca69109df645a221b0f"
 }
