@@ -2,6 +2,6 @@ import { Transporter } from 'iceteaid-core';
 
 export class NativeTransporter extends Transporter {
     protected boostrap(): void {
-        console.log('boostrap ...');
+        console.log('boostrap application ...');
     }
 }
