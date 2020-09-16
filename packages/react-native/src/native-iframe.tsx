@@ -1,7 +1,7 @@
+import React, { useState, useCallback } from 'react';
 import { Iframe } from 'iceteaid-core';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
-import React, { useState, useCallback } from 'react';
 import { Subject } from 'rxjs';
 
 export class NativeIframe extends Iframe {
