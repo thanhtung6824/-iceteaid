@@ -7,7 +7,7 @@
     "build:vital": "yarn rimraf packages/vital/dist && yarn webpack --config packages/vital/webpack.config.js --env=vital",
     "build:native": "yarn rimraf packages/react-native/dist && yarn webpack --config packages/react-native/webpack.config.js --env=native",
     "build": "yarn build:types && yarn build:vital && yarn build:native",
-    "lerna:publish": "lerna publish from-git from-git --canary --yes",
+    "lerna:publish": "lerna publish from-git --canary --yes",
     "release": "yarn build && yarn lerna:publish",
     "eslint:check": "yarn eslint packages"
   },
