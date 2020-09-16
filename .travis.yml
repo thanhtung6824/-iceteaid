@@ -22,7 +22,7 @@ before_deploy:
   - git tag $TRAVIS_TAG
 deploy:
   provider: script
-  script: "yarn publish"
+  script: "yarn lerna:publish"
   skip_cleanup: true
   on:
     node: "12.18"
