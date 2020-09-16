@@ -1,5 +1,5 @@
 {
-  "name": "iceteaid-vital",
+  "name": "iceteaid-core",
   "version": "0.0.5-alpha.0",
   "description": "provide share common code logic between modules",
   "author": "Tung",

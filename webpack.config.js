@@ -1,5 +1,5 @@
 const webpackTypes = require('./packages/types/webpack.config');
-const webpackVital = require('./packages/vital/webpack.config');
+const webpackCore = require('./packages/core/webpack.config');
 const webpackNative = require('./packages/react-native/webpack.config');
 const { merge } = require('webpack-merge');
 
@@ -10,9 +10,9 @@ module.exports = env => {
     switch(env) {
     case 'types':
         return merge(commonConfig, webpackTypes);
-    case 'vital':
-        return merge(commonConfig, webpackVital);
-    case 'native':
+    case 'core':
+        return merge(commonConfig, webpackCore);
+    case 'react-native':
         return merge(commonConfig, webpackNative);
     default:
         throw new Error('No matching configuration was found!');

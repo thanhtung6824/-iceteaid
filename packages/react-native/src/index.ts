@@ -1,4 +1,4 @@
-import { SdkBase, sdkBuilder } from 'iceteaid-vital';
+import { SdkBase, sdkBuilder } from 'iceteaid-core';
 import { NativeTransporter } from './native-transporter';
 import { NativeIframe } from './native-iframe';
 import { FC } from 'react';

@@ -1,4 +1,4 @@
-import { Transporter } from 'iceteaid-vital';
+import { Transporter } from 'iceteaid-core';
 
 export class NativeTransporter extends Transporter {
     protected boostrap(): void {
