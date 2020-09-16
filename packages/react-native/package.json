@@ -1,13 +1,13 @@
 {
   "name": "iceteaid-react-native",
-  "version": "0.0.15-alpha.0",
+  "version": "0.0.16-alpha.0",
   "description": "> TODO: description",
   "author": "Tung <thanhtung6824@gmail.com>",
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
-    "iceteaid-core": "^0.0.9-alpha.0"
+    "iceteaid-core": "^0.0.10-alpha.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
