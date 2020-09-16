@@ -1,5 +1,5 @@
 {
-  "name": "id-native",
+  "name": "iceteaid-native",
   "version": "0.0.5-alpha.0",
   "description": "> TODO: description",
   "author": "Tung <thanhtung6824@gmail.com>",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
-    "id-vital": "^0.0.5-alpha.0",
+    "iceteaid-vital": "^0.0.5-alpha.0",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "react-native-webview": "^10.9.0"
@@ -22,5 +22,5 @@
     "metro-react-native-babel-preset": "^0.63.0",
     "webpack-node-externals": "^2.5.2"
   },
-  "gitHead": "fdd861d6b8d512f777823ca69109df645a221b0f"
+  "gitHead": "ec8df143f93a2f72ccb76f06d55421e10d3b2f77"
 }

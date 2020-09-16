@@ -1,5 +1,5 @@
 import { BaseApi } from '../base-api';
-import { RequestType } from 'id-type';
+import { RequestType } from 'iceteaid-type';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 

@@ -1,4 +1,4 @@
-import { Iframe } from 'id-vital';
+import { Iframe } from 'iceteaid-vital';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 import React, { useState, useCallback } from 'react';
