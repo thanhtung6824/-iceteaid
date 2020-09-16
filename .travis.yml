@@ -11,10 +11,7 @@ before_install:
 script:
   - yarn eslint:check
 before_deploy:
-  - git config --local user.name ${GITHUB_USER}
-  - git config --local user.email ${GITHUB_EMAIL}
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-  - git tag $TRAVIS_TAG
+  - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
 deploy:
   provider: script
   script: "yarn release"
