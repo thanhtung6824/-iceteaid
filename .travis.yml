@@ -26,4 +26,4 @@ deploy:
   skip_cleanup: true
   on:
     node: "12.18"
-    branch: release
+    branch: master
