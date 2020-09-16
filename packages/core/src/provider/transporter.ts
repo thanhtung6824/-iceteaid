@@ -16,17 +16,20 @@ export abstract class Transporter {
     public post(iframe: Iframe, requestType: RequestType, payload: Record<string, any>): Observable<any> {
         const idMessage = randomId();
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
-        if (SdkConfiguration.target === 'react-native') {
-            return iframe.subject
-                .asObservable();
-        }
+        console.log('SdkConfiguration', SdkConfiguration);
+        return iframe.subject.asObservable();
 
-        return fromEvent<MessageEvent<string>>(window, 'message').pipe(
-            filter((messageEvent: MessageEvent<string>) => {
-                const messageData = JSON.parse(messageEvent.data);
-                return messageData.id === idMessage;
-            }),
-            map((messageEvent: MessageEvent<string>) => JSON.parse(messageEvent.data)),
-        );
+        // if (SdkConfiguration.target === 'react-native') {
+        //     return iframe.subject
+        //         .asObservable();
+        // }
+        //
+        // return fromEvent<MessageEvent<string>>(window, 'message').pipe(
+        //     filter((messageEvent: MessageEvent<string>) => {
+        //         const messageData = JSON.parse(messageEvent.data);
+        //         return messageData.id === idMessage;
+        //     }),
+        //     map((messageEvent: MessageEvent<string>) => JSON.parse(messageEvent.data)),
+        // );
     }
 }
