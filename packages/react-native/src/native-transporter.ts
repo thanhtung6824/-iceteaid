@@ -1,5 +1,7 @@
 import { Transporter } from '@iceteaid/vital';
 
 export class NativeTransporter extends Transporter {
-    protected boostrap() {}
+    protected boostrap(): void {
+        console.log('boostrap ...');
+    }
 }

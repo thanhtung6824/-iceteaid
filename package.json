@@ -5,7 +5,9 @@
     "bootstrap": "yarn install && lerna link",
     "build:types": "yarn rimraf packages/types/dist && yarn webpack --config packages/types/webpack.config.js --env=types",
     "build:vital": "yarn rimraf packages/vital/dist && yarn webpack --config packages/vital/webpack.config.js --env=vital",
-    "build:native": "yarn rimraf packages/react-native/dist && yarn webpack --config packages/react-native/webpack.config.js --env=native"
+    "build:native": "yarn rimraf packages/react-native/dist && yarn webpack --config packages/react-native/webpack.config.js --env=native",
+    "lerna:publish": "lerna publish from-git --yes --npm-client yarn --canary preminor",
+    "eslint:check": "yarn eslint packages"
   },
   "devDependencies": {
     "lerna": "^3.22.1",

@@ -1,9 +1,10 @@
 import { SdkBase, sdkBuilder } from '@iceteaid/vital';
 import { NativeTransporter } from './native-transporter';
 import { NativeIframe } from './native-iframe';
+import { FC } from 'react';
 
 export class SdkNative extends SdkBase {
-    public get IFrame() {
+    public get IFrame(): FC {
         return (this.iframe as unknown as NativeIframe).IFrame;
     }
 }
