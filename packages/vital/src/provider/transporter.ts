@@ -6,14 +6,14 @@ import { RequestType } from '@iceteaid/types';
 import { Iframe } from './iframe';
 
 export abstract class Transporter {
-    constructor(
+    protected constructor(
         protected endpoint: string
     ) {
         this.boostrap();
     }
 
     protected abstract boostrap () : void
-    public post(iframe: Iframe, requestType: RequestType, payload: any): Observable<any> {
+    public post(iframe: Iframe, requestType: RequestType, payload: Record<string, any>): Observable<any> {
         const idMessage = randomId();
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
         if (SdkConfiguration.target === 'react-native') {
@@ -21,13 +21,12 @@ export abstract class Transporter {
                 .asObservable();
         }
 
-        return fromEvent(window, 'message').pipe(
-            // @ts-ignore
-            filter((messageEvent: MessageEvent) => {
+        return fromEvent<MessageEvent<string>>(window, 'message').pipe(
+            filter((messageEvent: MessageEvent<string>) => {
                 const messageData = JSON.parse(messageEvent.data);
                 return messageData.id === idMessage;
             }),
-            map((messageEvent: MessageEvent) => JSON.parse(messageEvent.data)),
+            map((messageEvent: MessageEvent<string>) => JSON.parse(messageEvent.data)),
         );
     }
 }

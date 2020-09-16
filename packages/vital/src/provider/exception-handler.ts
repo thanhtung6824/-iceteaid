@@ -1,5 +1,7 @@
+import { ExceptionType } from '@iceteaid/types';
+
 export class ExceptionHandler extends Error {
-    constructor(code: any, message: string) {
+    constructor(code: ExceptionType, message: string) {
         super(`IceteaID Error: [${code}] ${message}`);
 
         // Set the prototype explicitly.
@@ -9,7 +11,7 @@ export class ExceptionHandler extends Error {
 
 export function missingApiKeyError(): ExceptionHandler {
     return new ExceptionHandler(
-        100,
+        ExceptionType.MISSING_API_KEY,
         'You must provide a api key'
     );
 }

@@ -6,10 +6,6 @@
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.js",
-  "scripts": {
-    "start": "yarn ts-node src/index.ts",
-    "build": "yarn rimraf dist && yarn webpack"
-  },
   "dependencies": {
     "@iceteaid/vital": "^0.0.3-alpha.0",
     "react": "^16.13.1",
@@ -24,7 +20,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "babel-loader": "^8.1.0",
     "metro-react-native-babel-preset": "^0.63.0",
-    "webpack-merge": "^5.1.4",
     "webpack-node-externals": "^2.5.2"
-  }
+  },
+  "gitHead": "c2a15dcaec8073245c37c436ef253376ed566523"
 }

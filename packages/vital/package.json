@@ -6,14 +6,11 @@
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.js",
-  "scripts": {
-    "build": "yarn rimraf dist && yarn webpack"
-  },
   "dependencies": {
-    "@iceteaid/types": "^0.0.3-alpha.0",
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
-    "webpack-merge": "^5.1.4"
-  }
+    "@iceteaid/types": "^0.0.3-alpha.0"
+  },
+  "gitHead": "c2a15dcaec8073245c37c436ef253376ed566523"
 }

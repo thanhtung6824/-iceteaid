@@ -5,7 +5,7 @@ export abstract class Iframe {
 
     protected abstract closeIframe(): void
 
-    public abstract postMessage(payload: any): void
+    public abstract postMessage(payload: string): void
 
     protected constructor(protected endpoint: string, protected sdkId: string) {
     }
