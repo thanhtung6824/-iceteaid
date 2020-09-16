@@ -1,6 +1,6 @@
 {
   "name": "id-vital",
-  "version": "0.0.4-alpha.0",
+  "version": "0.0.5-alpha.0",
   "description": "provide share common code logic between modules",
   "author": "Tung",
   "homepage": "",
@@ -10,7 +10,7 @@
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
-    "id-type": "^0.0.4-alpha.0"
+    "id-type": "^0.0.5-alpha.0"
   },
   "gitHead": "fdd861d6b8d512f777823ca69109df645a221b0f"
 }
