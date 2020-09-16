@@ -8,6 +8,7 @@
     "build:native": "yarn rimraf packages/react-native/dist && yarn webpack --config packages/react-native/webpack.config.js --env=react-native",
     "build": "yarn build:types && yarn build:core && yarn build:native",
     "lerna:publish": "lerna publish from-package --canary --yes",
+    "lerna:version": "lerna version prepatch --yes",
     "release": "yarn build && yarn lerna:publish",
     "eslint:check": "yarn eslint packages"
   },
