@@ -15,10 +15,12 @@ before_deploy:
   - git config --local user.email ${GITHUB_EMAIL}
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
   - git tag $TRAVIS_TAG
+  - git push --tag
 deploy:
   provider: script
   script: "yarn release"
   skip_cleanup: true
   on:
     node: "12.18"
-    branch: master
+    branches:
+      only: master
