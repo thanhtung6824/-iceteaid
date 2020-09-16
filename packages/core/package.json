@@ -1,14 +1,14 @@
 {
   "name": "iceteaid-core",
-  "version": "0.0.5-alpha.0",
+  "version": "0.0.6-alpha.0",
   "description": "provide share common code logic between modules",
   "author": "Tung",
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
-    "rxjs": "^6.6.3",
-    "iceteaid-type": "^0.0.5-alpha.0"
+    "iceteaid-type": "^0.0.6-alpha.0",
+    "rxjs": "^6.6.3"
   },
   "gitHead": "ec8df143f93a2f72ccb76f06d55421e10d3b2f77"
 }
