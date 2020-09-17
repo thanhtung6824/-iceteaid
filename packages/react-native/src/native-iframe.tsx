@@ -2,12 +2,12 @@ import React, { useState, useCallback } from 'react';
 import { Iframe } from 'iceteaid-core';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 export class NativeIframe extends Iframe {
     protected iframe: WebView | null = null;
     protected view: any;
-    public subject = new Subject<any>();
+    public subject = new BehaviorSubject<any>('');
 
     protected closeIframe(): void {
         if (this.view) {

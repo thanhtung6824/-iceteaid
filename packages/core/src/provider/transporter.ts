@@ -1,5 +1,5 @@
-import { fromEvent, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { fromEvent, Observable, lastValueFrom } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 import { queryBuilder, randomId } from '../helpers';
 import { SdkConfiguration } from './sdk';
 import { RequestType } from 'iceteaid-type';
@@ -13,11 +13,13 @@ export abstract class Transporter {
     }
 
     protected abstract boostrap () : void
-    public post(iframe: Iframe, requestType: RequestType, payload: Record<string, any>): Observable<any> {
+    public async post(iframe: Iframe, requestType: RequestType, payload: Record<string, any>): Promise<any> {
         const idMessage = randomId();
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
         console.log('SdkConfiguration', SdkConfiguration);
-        return iframe.subject.asObservable();
+        return await lastValueFrom(iframe.subject.asObservable().pipe(
+            take(1)
+        ));
 
 
         // if (SdkConfiguration.target === 'react-native') {
