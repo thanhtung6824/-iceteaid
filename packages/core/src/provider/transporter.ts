@@ -1,5 +1,5 @@
 import { fromEvent, Observable, lastValueFrom } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { filter, map, take, takeLast } from 'rxjs/operators';
 import { queryBuilder, randomId } from '../helpers';
 import { SdkConfiguration } from './sdk';
 import { RequestType } from 'iceteaid-type';
@@ -16,9 +16,8 @@ export abstract class Transporter {
     public async post(iframe: Iframe, requestType: RequestType, payload: Record<string, any>): Promise<any> {
         const idMessage = randomId();
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
-        console.log('SdkConfiguration', SdkConfiguration);
         return await lastValueFrom(iframe.subject.asObservable().pipe(
-            take(1)
+            takeLast(1)
         ));
 
 
