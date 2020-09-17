@@ -8,6 +8,7 @@ export class NativeIframe extends Iframe {
     protected iframe: WebView | null = null;
     protected view: any;
     public subject = new BehaviorSubject<any>('');
+    public messageHandler = new Map<string, any>();
 
     protected closeIframe(): void {
         if (this.view) {
@@ -62,7 +63,8 @@ export class NativeIframe extends Iframe {
             if (!event.nativeEvent && event.nativeEvent.url !== this.endpoint) {
                 return;
             }
-            this.subject.next(event.nativeEvent.data);
+            const subject = this.messageHandler.get(JSON.parse(event.nativeEvent.data).id);
+            subject.next(event.nativeEvent.data);
         };
 
         return (
