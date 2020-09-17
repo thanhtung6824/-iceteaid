@@ -33,7 +33,6 @@ export class NativeIframe extends Iframe {
 
     public postMessage(payload: string): void {
         if (this.iframe) {
-            this.view.openIframe();
             (this.iframe as any).postMessage(payload);
         }
     }

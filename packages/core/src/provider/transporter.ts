@@ -19,7 +19,7 @@ export abstract class Transporter {
         console.log('SdkConfiguration', SdkConfiguration);
         return iframe.subject.asObservable();
 
-        
+
         // if (SdkConfiguration.target === 'react-native') {
         //     return iframe.subject
         //         .asObservable();
