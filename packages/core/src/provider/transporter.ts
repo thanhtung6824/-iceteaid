@@ -17,7 +17,7 @@ export abstract class Transporter {
         const idMessage = randomId();
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
         return await lastValueFrom(iframe.subject.asObservable().pipe(
-            takeLast(1)
+            take(1)
         ));
 
 
