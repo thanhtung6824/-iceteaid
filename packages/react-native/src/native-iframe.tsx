@@ -3,6 +3,7 @@ import { Iframe } from 'iceteaid-core';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { BehaviorSubject } from 'rxjs';
+import { RequestType } from 'iceteaid-type';
 
 export class NativeIframe extends Iframe {
     protected iframe: WebView | null = null;
@@ -34,6 +35,10 @@ export class NativeIframe extends Iframe {
 
     public postMessage(payload: string): void {
         if (this.iframe) {
+            const message = JSON.parse(payload);
+            if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
+                this.view.openIframe();
+            }
             (this.iframe as any).postMessage(payload);
         }
     }

@@ -17,4 +17,8 @@ export class AuthApi extends BaseApi {
     public verifyOtpLogin(emailOrPhone: string, channel: string, verifyCode: string): Promise<any> {
         return this.transporter.post(this.iframe, RequestType.VERIFY_OTP_LOGIN, { emailOrPhone, channel, verifyCode });
     }
+
+    public loginWithGoogle(): Promise<any> {
+        return this.transporter.post(this.iframe, RequestType.LOGIN_WITH_GOOGLE, {});
+    }
 }

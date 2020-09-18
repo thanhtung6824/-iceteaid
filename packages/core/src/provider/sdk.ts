@@ -12,11 +12,14 @@ export class SdkBase {
     public readonly endpoint: string;
     public readonly user: UserApi;
     public readonly auth: AuthApi;
+    private static instance: SdkBase;
+    private readonly apiKey: string
 
     constructor(apiKey: string) {
         if (!apiKey) {
             throw missingApiKeyError();
         }
+        this.apiKey = apiKey;
         this.endpoint = SdkConfiguration.baseUrl;
         this.user = new UserApi(this);
         this.auth = new AuthApi(this);
@@ -25,6 +28,15 @@ export class SdkBase {
             target: SdkConfiguration.target,
             baseUrl: SdkConfiguration.baseUrl,
         }));
+        SdkConfiguration.Instance = this;
+    }
+
+    public get instance(): SdkBase {
+        if (!SdkBase.instance) {
+            SdkBase.instance = new SdkBase(this.apiKey);
+        }
+
+        return SdkBase.instance;
     }
 
     public get transporter(): Transporter {
@@ -49,6 +61,7 @@ interface SdkConfiguration {
     baseUrl: string;
     Transporter: any,
     Iframe: any,
+    Instance?: SdkBase | undefined,
 }
 
 export const SdkConfiguration: SdkConfiguration = {} as SdkConfiguration;
