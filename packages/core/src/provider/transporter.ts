@@ -19,7 +19,8 @@ export abstract class Transporter {
         const subject = new BehaviorSubject('');
         iframe.messageHandler.set(idMessage, subject);
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
-        return await lastValueFrom(iframe.subject.asObservable().pipe(
+        return await lastValueFrom(subject.asObservable().pipe(
+            // @ts-ignore
             filter(message => message),
             map(message => JSON.parse(message)),
             take(1),
