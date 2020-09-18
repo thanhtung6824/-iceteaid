@@ -5,7 +5,7 @@ import { RequestType } from 'iceteaid-type';
 // }
 
 export function randomId (): string {
-    return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+    return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
 }
 
 export function queryBuilder(idMessage: string, requestType: RequestType, payload: Record<string, any>) : string {
