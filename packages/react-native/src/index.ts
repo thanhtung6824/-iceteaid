@@ -25,4 +25,5 @@ export const IceteaId = sdkBuilder(SdkNative, {
 });
 
 export const instance = SdkConfiguration.Instance as SdkNative;
+
 export const sdkConfiguration = SdkConfiguration;
