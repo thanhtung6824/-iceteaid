@@ -68,10 +68,9 @@ export class NativeIframe extends Iframe {
 
         const handleWebViewNavigationStateChange = (newNavState: { url: any; canGoForward: any; }) => {
             // eslint-disable-next-line prefer-const
-            let { url, canGoForward } = newNavState;
-            console.log(url, canGoForward);
+            const { url } = newNavState;
+            console.log(url);
             if (!url) return;
-            canGoForward = true;
             const returnUrl = new URL(url);
             const urlParams = new URLSearchParams(returnUrl.search);
             const credentials = urlParams.get('token');
