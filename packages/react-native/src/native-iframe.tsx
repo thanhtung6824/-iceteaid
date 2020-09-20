@@ -73,17 +73,13 @@ export class NativeIframe extends Iframe {
             if (!url) return;
             canGoForward = true;
             const returnUrl = new URL(url);
-            console.log('returlUrlseach', returnUrl.search);
-            console.log('returlUrlseachparam', returnUrl.searchParams);
             const urlParams = new URLSearchParams(returnUrl.search);
             const credentials = urlParams.get('token');
-            console.log('credentials', credentials);
-            console.log('this.googleLoginId', this.googleLoginId);
             if (credentials && this.googleLoginId) {
                 const token = JSON.parse(credentials);
                 const subject = this.messageHandler.get(this.googleLoginId);
                 subject.next({
-                    payload: { token: token.data.access_token }, id: this.googleLoginId
+                    payload: { token: token.access_token }, id: this.googleLoginId
                 });
                 closeIframe();
             }
