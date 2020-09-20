@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Iframe } from 'iceteaid-core';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { BehaviorSubject } from 'rxjs';
 import { RequestType } from 'iceteaid-type';
@@ -21,16 +21,6 @@ export class NativeIframe extends Iframe {
         if (this.view) {
             this.view.openIframe();
         }
-    }
-
-    ActivityIndicatorLoadingView(): JSX.Element {
-        return (
-            <ActivityIndicator
-                color="#009688"
-                size="large"
-                style={styles.activityIndicatorStyle}
-            />
-        );
     }
 
     public postMessage(payload: string): void {
@@ -77,6 +67,14 @@ export class NativeIframe extends Iframe {
 
         };
 
+        const handleWebViewNavigationStateChange = (newNavState: { url: any; canGoForward: any; }) => {
+            // eslint-disable-next-line prefer-const
+            let { url, canGoForward } = newNavState;
+            console.log(url, canGoForward);
+            if (!url) return;
+            canGoForward = true;
+        };
+
         return (
             <View ref={viewRef} style={styles.container}>
                 <WebView
@@ -86,8 +84,8 @@ export class NativeIframe extends Iframe {
                     source={{ uri: this.endpoint }}
                     onMessage={onMessage}
                     containerStyle={open ? styles.webview : styles.hideWebview}
-                    renderLoading={this.ActivityIndicatorLoadingView}
                     userAgent={'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'}
+                    onNavigationStateChange={handleWebViewNavigationStateChange}
                 />
             </View>
         );
@@ -96,25 +94,31 @@ export class NativeIframe extends Iframe {
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
+        flex: 1,
         width: '100%',
-        height: '100%',
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10000,
     },
     webview: {
         flex: 1,
-        margin: 20,
-        borderRadius: 20,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.34,
-        shadowRadius: 6.27,
-        elevation: 10000,
+        backgroundColor: 'transparent',
+    },
+    showWebview: {
+        display: 'flex'
     },
     hideWebview: {
-        display: 'none',
+        display: 'none'
+    },
+    showContainer: {
+        zIndex: 10000
+    },
+    hideContainer: {
+        zIndex: -10000,
     },
     activityIndicatorStyle: {
         flex: 1,
