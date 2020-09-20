@@ -10,6 +10,7 @@ export class NativeIframe extends Iframe {
     protected view: any;
     public subject = new BehaviorSubject<any>('');
     public messageHandler = new Map<string, any>();
+    private googleLoginId = '';
 
     protected closeIframe(): void {
         if (this.view) {
@@ -28,6 +29,7 @@ export class NativeIframe extends Iframe {
             const message = JSON.parse(payload);
             if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
                 this.view.openIframe();
+                this.googleLoginId = message.id;
             }
             (this.iframe as any).postMessage(payload);
         }
@@ -59,11 +61,8 @@ export class NativeIframe extends Iframe {
                 return;
             }
             const message = JSON.parse(event.nativeEvent.data);
-            if (message.needToClose) {
-                closeIframe();
-            }
             const subject = this.messageHandler.get(message.id);
-            subject.next(event.nativeEvent.data);
+            subject.next(message);
 
         };
 
@@ -73,6 +72,17 @@ export class NativeIframe extends Iframe {
             console.log(url, canGoForward);
             if (!url) return;
             canGoForward = true;
+            const urlParams = new URLSearchParams(url);
+            const credentials = urlParams.get('token');
+            if (credentials && this.googleLoginId) {
+                const token = JSON.parse(credentials);
+                console.log(token);
+                const subject = this.messageHandler.get(this.googleLoginId);
+                subject.next({
+                    payload: { token: token.data.access_token }, id: this.googleLoginId
+                });
+                closeIframe();
+            }
         };
 
         return (

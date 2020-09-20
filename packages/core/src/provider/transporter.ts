@@ -21,7 +21,6 @@ export abstract class Transporter {
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
         return await lastValueFrom(subject.asObservable().pipe(
             filter(message => !!message),
-            map(message => JSON.parse(message)),
             take(1),
             tap(() => {
                 iframe.messageHandler.delete(idMessage);

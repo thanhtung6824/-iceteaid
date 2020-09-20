@@ -3,8 +3,11 @@ import { NativeTransporter } from './native-transporter';
 import { NativeIframe } from './native-iframe';
 import React from 'react';
 import { Buffer } from 'buffer';
+import { URL, URLSearchParams } from 'whatwg-url';
 
 global.Buffer = Buffer;
+global.URL = URL as any;
+global.URLSearchParams = URLSearchParams as any;
 global.btoa = (str) => Buffer.from(str, 'binary').toString('base64');
 global.atob = (b64Encoded) => Buffer.from(b64Encoded, 'base64').toString('binary');
 
