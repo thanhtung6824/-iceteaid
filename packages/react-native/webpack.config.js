@@ -5,13 +5,24 @@ module.exports = {
     mode: 'production',
     entry: path.join(__dirname, 'src/index.ts'),
     target: 'node',
-    externals: [nodeExternals()],
+    externals: [
+        // nodeExternals()
+        'react',
+        'react-native',
+        'react-native-webview',
+        'rxjs',
+        'iceteaid-core',
+        'iceteaid-type',
+    ],
     module: {
         rules: [
             {
                 test: /\.(ts|tsx)?$/,
                 exclude: /node_modules/,
-                include: path.resolve(__dirname, 'src'),
+                include: [
+                    path.resolve(__dirname, 'src'),
+                    path.resolve(__dirname, 'node_modules/whatwg-url')
+                ],
                 use: [
                     {
                         loader: 'ts-loader',
