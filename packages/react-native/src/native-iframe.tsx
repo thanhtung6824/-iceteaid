@@ -76,7 +76,7 @@ export class NativeIframe extends Iframe {
         };
 
         return (
-            <View ref={viewRef} style={styles.container}>
+            <View ref={viewRef} style={[styles.container, open ? styles.showContainer : styles.hideContainer ]}>              
                 <WebView
                     ref={webviewRef}
                     startInLoadingState={true}
