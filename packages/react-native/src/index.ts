@@ -24,4 +24,5 @@ export const IceteaId = sdkBuilder(SdkNative, {
     Iframe: NativeIframe,
 });
 
-export const instance = SdkConfiguration.Instance;
+export const instance = SdkConfiguration.Instance as SdkNative;
+export const sdkConfiguration = SdkConfiguration;
