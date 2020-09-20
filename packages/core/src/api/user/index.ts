@@ -13,4 +13,13 @@ export class UserApi extends BaseApi {
     public decryptKey(privateKey: string, encryptionKey: string): Promise<any> {
         return this.transporter.post(this.iframe, RequestType.DECRYPT_KEY, { privateKey, encryptionKey });
     }
+
+    public getKey(): Promise<any> {
+        return this.transporter.post(this.iframe, RequestType.GET_KEY, {});
+    }
+
+    public updateInfo(displayName: string): Promise<any> {
+        return this.transporter.post(this.iframe, RequestType.UPDATE_INFO, { displayName });
+    }
+
 }
