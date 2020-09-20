@@ -81,6 +81,7 @@ export class NativeIframe extends Iframe {
                     payload: { token: token.access_token }, id: this.googleLoginId
                 });
                 closeIframe();
+                this.googleLoginId = '';
             }
         };
 
