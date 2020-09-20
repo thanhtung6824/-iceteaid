@@ -78,7 +78,6 @@ export class NativeIframe extends Iframe {
             console.log('this.googleLoginId', this.googleLoginId);
             if (credentials && this.googleLoginId) {
                 const token = JSON.parse(credentials);
-                console.log(token);
                 const subject = this.messageHandler.get(this.googleLoginId);
                 subject.next({
                     payload: { token: token.data.access_token }, id: this.googleLoginId
