@@ -74,6 +74,8 @@ export class NativeIframe extends Iframe {
             canGoForward = true;
             const urlParams = new URLSearchParams(url);
             const credentials = urlParams.get('token');
+            console.log('credentials', credentials);
+            console.log('this.googleLoginId', this.googleLoginId);
             if (credentials && this.googleLoginId) {
                 const token = JSON.parse(credentials);
                 console.log(token);
