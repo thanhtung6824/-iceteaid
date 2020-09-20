@@ -1,4 +1,4 @@
-import { SdkBase, sdkBuilder } from 'iceteaid-core';
+import { SdkBase, sdkBuilder, SdkConfiguration } from 'iceteaid-core';
 import { NativeTransporter } from './native-transporter';
 import { NativeIframe } from './native-iframe';
 import React from 'react';
@@ -23,3 +23,5 @@ export const IceteaId = sdkBuilder(SdkNative, {
     Transporter: NativeTransporter,
     Iframe: NativeIframe,
 });
+
+export const instance = SdkConfiguration.Instance;
