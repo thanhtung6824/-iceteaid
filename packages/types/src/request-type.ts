@@ -8,4 +8,5 @@ export enum RequestType {
     LOGIN_WITH_GOOGLE = 'LOGIN_WITH_GOOGLE',
     GET_KEY = 'GET_KEY',
     UPDATE_INFO = 'UPDATE_INFO',
+    GET_META_DATA = 'GET_META_DATA'
 }

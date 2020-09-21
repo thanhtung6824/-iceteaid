@@ -18,8 +18,12 @@ export class UserApi extends BaseApi {
         return this.transporter.post(this.iframe, RequestType.GET_KEY, {});
     }
 
-    public updateInfo(displayName: string): Promise<any> {
-        return this.transporter.post(this.iframe, RequestType.UPDATE_INFO, { displayName });
+    public updateInfo(displayName: string, fullName: string): Promise<any> {
+        return this.transporter.post(this.iframe, RequestType.UPDATE_INFO, { displayName, fullName });
+    }
+
+    public getMetaData(): Promise<any> {
+        return this.transporter.post(this.iframe, RequestType.GET_META_DATA, {});
     }
 
 }
