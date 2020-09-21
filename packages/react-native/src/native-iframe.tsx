@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Iframe } from 'iceteaid-core';
+import { Iframe, queryBuilder, randomId } from 'iceteaid-core';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { BehaviorSubject } from 'rxjs';
@@ -31,6 +31,7 @@ export class NativeIframe extends Iframe {
                 this.view.openIframe();
                 this.googleLoginId = message.id;
             }
+
             (this.iframe as any).postMessage(payload);
         }
     }
@@ -62,8 +63,12 @@ export class NativeIframe extends Iframe {
             }
             const message = JSON.parse(event.nativeEvent.data);
             const subject = this.messageHandler.get(message.id);
-            subject.next(message);
-
+            if (subject) {
+                subject.next(message);
+                if (message.id === this.googleLoginId) {
+                    this.googleLoginId = '';
+                }
+            }
         };
 
         const handleWebViewNavigationStateChange = (newNavState: { url: any; canGoForward: any; }) => {
@@ -74,15 +79,12 @@ export class NativeIframe extends Iframe {
             const credentials = urlParams.get('token');
             if (credentials && this.googleLoginId) {
                 const token = JSON.parse(credentials);
-                const subject = this.messageHandler.get(this.googleLoginId);
-                subject.next({
-                    payload: { token: token.access_token }, id: this.googleLoginId
-                });
+                // const subject = this.messageHandler.get(this.googleLoginId);
+                // subject.next({
+                //     payload: { token: token.access_token }, id: this.googleLoginId
+                // });
                 this.view.closeIframe();
-                (this.iframe as any).postMessage(JSON.stringify({
-                    payload: token, requestType: RequestType.GOOGLE_TOKEN
-                }));
-                this.googleLoginId = '';
+                (this.iframe as any).postMessage(queryBuilder(this.googleLoginId, RequestType.GOOGLE_TOKEN, token));
             }
         };
 
