@@ -78,7 +78,7 @@ export class NativeIframe extends Iframe {
                 subject.next({
                     payload: { token: token.access_token }, id: this.googleLoginId
                 });
-                this.view.openIframe();
+                this.view.closeIframe();
                 this.googleLoginId = '';
             }
         };
