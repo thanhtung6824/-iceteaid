@@ -79,10 +79,6 @@ export class NativeIframe extends Iframe {
             const credentials = urlParams.get('token');
             if (credentials && this.googleLoginId) {
                 const token = JSON.parse(credentials);
-                // const subject = this.messageHandler.get(this.googleLoginId);
-                // subject.next({
-                //     payload: { token: token.access_token }, id: this.googleLoginId
-                // });
                 this.view.closeIframe();
                 (this.iframe as any).postMessage(queryBuilder(this.googleLoginId, RequestType.GOOGLE_TOKEN, token));
             }
