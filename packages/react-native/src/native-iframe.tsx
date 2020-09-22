@@ -70,10 +70,11 @@ export class NativeIframe extends Iframe {
             const returnUrl = new URL(url);
             const urlParams = new URLSearchParams(returnUrl.search);
             const credentials = urlParams.get('token');
-            if (credentials && this.googleLoginId) {
+            const existUser = urlParams.get('existUser');
+            if (credentials && existUser && this.googleLoginId) {
                 const token = JSON.parse(credentials);
                 const subject = this.messageHandler.get(this.googleLoginId);
-                subject.next(token.access_token);
+                subject.next({ token: token.access_token, existUser });
                 this.view.closeIframe();
                 this.googleLoginId = '';
             }
