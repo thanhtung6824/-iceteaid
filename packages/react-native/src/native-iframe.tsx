@@ -75,6 +75,7 @@ export class NativeIframe extends Iframe {
                 const subject = this.messageHandler.get(this.googleLoginId);
                 subject.next(token.access_token);
                 this.view.closeIframe();
+                this.googleLoginId = '';
             }
         };
 
