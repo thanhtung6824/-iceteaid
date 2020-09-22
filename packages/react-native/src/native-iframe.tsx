@@ -71,7 +71,7 @@ export class NativeIframe extends Iframe {
             const urlParams = new URLSearchParams(returnUrl.search);
             const credentials = urlParams.get('token');
             const existUser = urlParams.get('existUser');
-            console.log('url', url);
+            console.log('url:', url);
             if (credentials && existUser && this.googleLoginId) {
                 const token = JSON.parse(credentials);
                 const subject = this.messageHandler.get(this.googleLoginId);
