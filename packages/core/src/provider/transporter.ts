@@ -1,13 +1,12 @@
-import { fromEvent, Observable, lastValueFrom } from 'rxjs';
-import { filter, map, take, tap } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs';
+import { filter, take, tap } from 'rxjs/operators';
 import { queryBuilder, randomId } from '../helpers';
-import { SdkConfiguration } from './sdk';
 import { RequestType } from 'iceteaid-type';
 import { Iframe } from './iframe';
 import { BehaviorSubject } from 'rxjs';
 
 export abstract class Transporter {
-    protected constructor(
+    constructor(
         protected endpoint: string
     ) {
         this.boostrap();

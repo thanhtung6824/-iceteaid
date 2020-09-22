@@ -1,4 +1,4 @@
-import { SdkBase, sdkBuilder, SdkConfiguration } from 'iceteaid-core';
+import { SdkBase, sdkBuilder } from 'iceteaid-core';
 import { NativeTransporter } from './native-transporter';
 import { NativeIframe } from './native-iframe';
 import React from 'react';
@@ -17,13 +17,12 @@ export class SdkNative extends SdkBase {
     }
 }
 
-export const IceteaId = sdkBuilder(SdkNative, {
+export const IceteaId = sdkBuilder(SdkNative , {
     target: 'react-native',
     baseUrl: 'http://3k.theydont.work',
     Transporter: NativeTransporter,
     Iframe: NativeIframe,
 });
 
-export const sdkConfiguration = SdkConfiguration;
 
 export { SdkConfiguration } from 'iceteaid-core';

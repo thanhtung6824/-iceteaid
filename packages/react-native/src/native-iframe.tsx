@@ -1,14 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { Iframe, queryBuilder, randomId } from 'iceteaid-core';
+import { Iframe } from 'iceteaid-core';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { BehaviorSubject } from 'rxjs';
 import { RequestType } from 'iceteaid-type';
 
 export class NativeIframe extends Iframe {
     protected iframe: WebView | null = null;
     protected view: any;
-    public subject = new BehaviorSubject<any>('');
     public messageHandler = new Map<string, any>();
     private googleLoginId = '';
 
@@ -63,12 +61,7 @@ export class NativeIframe extends Iframe {
             }
             const message = JSON.parse(event.nativeEvent.data);
             const subject = this.messageHandler.get(message.id);
-            if (subject) {
-                subject.next(message);
-                if (message.id === this.googleLoginId) {
-                    this.googleLoginId = '';
-                }
-            }
+            subject.next(message);
         };
 
         const handleWebViewNavigationStateChange = (newNavState: { url: any; canGoForward: any; }) => {
@@ -79,8 +72,9 @@ export class NativeIframe extends Iframe {
             const credentials = urlParams.get('token');
             if (credentials && this.googleLoginId) {
                 const token = JSON.parse(credentials);
+                const subject = this.messageHandler.get(this.googleLoginId);
+                subject.next(token.access_token);
                 this.view.closeIframe();
-                (this.iframe as any).postMessage(queryBuilder(this.googleLoginId, RequestType.GOOGLE_TOKEN, token));
             }
         };
 
@@ -92,7 +86,6 @@ export class NativeIframe extends Iframe {
                     javaScriptEnabled={true}
                     source={{ uri: this.endpoint }}
                     onMessage={onMessage}
-                    // containerStyle={open ? styles.webview : styles.hideWebview}
                     userAgent={'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'}
                     onNavigationStateChange={handleWebViewNavigationStateChange}
                 />

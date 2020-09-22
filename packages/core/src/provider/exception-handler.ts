@@ -15,3 +15,10 @@ export function missingApiKeyError(): ExceptionHandler {
         'You must provide a api key'
     );
 }
+
+export function missingParameter(param: string): ExceptionHandler {
+    return new ExceptionHandler(
+        ExceptionType.MISSING_PARAMETER,
+        `Parameter ${param} is required`
+    );
+}
