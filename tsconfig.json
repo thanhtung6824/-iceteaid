@@ -2,10 +2,10 @@
   "compilerOptions": {
 //    "rootDir": "./packages",
 //    "outDir": "./dist",
-    "lib": ["esnext", "dom"],
+    "lib": ["es2018", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "esnext",
+    "target": "es5",
     "strict": true,
     "jsx": "react",
     "allowSyntheticDefaultImports": true,

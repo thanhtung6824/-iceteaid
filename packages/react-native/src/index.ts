@@ -11,6 +11,7 @@ global.URLSearchParams = URLSearchParams as any;
 global.btoa = (str) => Buffer.from(str, 'binary').toString('base64');
 global.atob = (b64Encoded) => Buffer.from(b64Encoded, 'base64').toString('binary');
 
+
 export class SdkNative extends SdkBase {
     public get IFrame(): React.FC {
         return (this.iframe as unknown as NativeIframe).IFrame;
