@@ -63,6 +63,9 @@ export class NativeIframe extends Iframe {
             const subject = this.messageHandler.get(message.id);
             console.log('message received ..', message);
             subject.next(message);
+            if (message.id === this.googleLoginId) {
+                this.googleLoginId = '';
+            }
         };
 
         const handleWebViewNavigationStateChange = (newNavState: { url: any; canGoForward: any; }) => {
@@ -75,10 +78,13 @@ export class NativeIframe extends Iframe {
             console.log('url:', url);
             if (credentials && existUser && this.googleLoginId) {
                 const token = JSON.parse(credentials);
-                const subject = this.messageHandler.get(this.googleLoginId);
-                subject.next({ token: token.access_token, existUser });
+                (this.iframe as any).postMessage(JSON.stringify({
+                    id: this.googleLoginId, payload: {
+                        token: token.access_token,
+                        existUser
+                    }, requestType : 'GOOGLE_TOKEN'
+                }));
                 this.view.closeIframe();
-                this.googleLoginId = '';
             }
         };
 
