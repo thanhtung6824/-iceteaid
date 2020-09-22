@@ -4,7 +4,9 @@ import { NativeIframe } from './native-iframe';
 import React from 'react';
 import { Buffer } from 'buffer';
 import { URL, URLSearchParams } from 'whatwg-url';
+import bigInt from 'big-integer';
 
+global.BigInt = bigInt as any;
 global.Buffer = Buffer;
 global.URL = URL as any;
 global.URLSearchParams = URLSearchParams as any;

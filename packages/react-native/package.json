@@ -7,6 +7,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
+    "big-integer": "^1.6.48",
     "iceteaid-core": "^0.0.27-alpha.0",
     "whatwg-url": "^8.2.2"
   },
