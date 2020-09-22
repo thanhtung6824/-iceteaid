@@ -2,7 +2,7 @@
   "compilerOptions": {
 //    "rootDir": "./packages",
 //    "outDir": "./dist",
-    "lib": ["es2018", "dom"],
+    "lib": ["esnext", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "esnext",
