@@ -61,6 +61,7 @@ export class NativeIframe extends Iframe {
             }
             const message = JSON.parse(event.nativeEvent.data);
             const subject = this.messageHandler.get(message.id);
+            console.log('message receive', message);
             subject.next(message);
         };
 
