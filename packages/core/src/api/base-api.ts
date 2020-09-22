@@ -11,5 +11,4 @@ export abstract class BaseApi {
     protected get transporter(): Transporter {
         return this.iceteaId.transporter;
     }
-
 }
