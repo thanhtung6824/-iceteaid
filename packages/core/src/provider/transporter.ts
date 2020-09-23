@@ -23,19 +23,5 @@ export abstract class Transporter {
                 iframe.messageHandler.delete(id);
             })
         ));
-
-
-        // if (SdkConfiguration.target === 'react-native') {
-        //     return iframe.subject
-        //         .asObservable();
-        // }
-        //
-        // return fromEvent<MessageEvent<string>>(window, 'message').pipe(
-        //     filter((messageEvent: MessageEvent<string>) => {
-        //         const messageData = JSON.parse(messageEvent.data);
-        //         return messageData.id === idMessage;
-        //     }),
-        //     map((messageEvent: MessageEvent<string>) => JSON.parse(messageEvent.data)),
-        // );
     }
 }

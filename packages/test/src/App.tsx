@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import { IceteaId } from 'iceteaid-web';
-const i = new IceteaId();
+const i = new IceteaId('xx');
 
 function App() {
     return (
-        <div className="App">
+        <div>
+            <button onClick={async () => {
+                const key = await i.user.generateEncryptionKey();
+                console.log(key);
+            }}>
+                Test
+            </button>
         </div>
     );
 }

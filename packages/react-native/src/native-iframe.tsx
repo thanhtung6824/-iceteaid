@@ -50,7 +50,6 @@ export class NativeIframe extends Iframe {
                         requestType: RequestType.IS_READY,
                     }));
                     const isOkay = await lastValueFrom(subject.asObservable().pipe(
-                        // @ts-ignore
                         filter(message => !!message),
                         take(1),
                         tap(() => {

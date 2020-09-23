@@ -6,6 +6,11 @@
   ],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   }
 }

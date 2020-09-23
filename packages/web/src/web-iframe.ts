@@ -5,7 +5,7 @@ const isIframeExist = (eleId: string) => {
 };
 
 export class WebIframe extends Iframe {
-    private iframe: Promise<HTMLIFrameElement> | null = null;
+    private iframe!: Promise<HTMLIFrameElement>;
     public messageHandler = new Map<string, any>();
 
     protected bootstrap(): void {
@@ -23,7 +23,6 @@ export class WebIframe extends Iframe {
                 iframe.style.display = 'none';
                 document.body.appendChild(iframe);
                 iframe.onload = () => {
-                    iframe.style.display = 'block';
                     resolve(iframe);
                 };
             }
