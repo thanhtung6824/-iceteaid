@@ -11,4 +11,6 @@ export abstract class Iframe {
     }
 
     public abstract messageHandler: Map<string, Subject<any>>;
+
+    public abstract isReady(): Promise<any>;
 }

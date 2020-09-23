@@ -1,9 +1,8 @@
 import { lastValueFrom } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
-import { queryBuilder, randomId } from '../helpers';
+import { queryBuilder, subjectBuilder } from '../helpers';
 import { RequestType } from 'iceteaid-type';
 import { Iframe } from './iframe';
-import { BehaviorSubject } from 'rxjs';
 
 export abstract class Transporter {
     constructor(
@@ -14,9 +13,9 @@ export abstract class Transporter {
 
     protected abstract boostrap () : void
     public async post(iframe: Iframe, requestType: RequestType, payload: Record<string, any>): Promise<any> {
-        const idMessage = randomId();
-        const subject = new BehaviorSubject('');
-        iframe.messageHandler.set(idMessage, subject);
+        await iframe.isReady();
+        const { id: idMessage, subject } = subjectBuilder(iframe.messageHandler);
+
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
         return await lastValueFrom(subject.asObservable().pipe(
             filter(message => !!message),

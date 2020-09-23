@@ -1,10 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { Iframe, randomId } from 'iceteaid-core';
+import { Iframe, subjectBuilder } from 'iceteaid-core';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
-import { BehaviorSubject } from 'rxjs';
-import { filter, take, tap } from 'rxjs/operators';
+import { filter, take, tap, lastValueFrom } from 'rxjs/operators';
 
 export class NativeIframe extends Iframe {
     protected iframe: WebView | null = null;
@@ -25,43 +24,39 @@ export class NativeIframe extends Iframe {
     }
 
     public async postMessage(payload: string): Promise<void> {
-        await this.isReady();
-        if (this.iframe) {
-            const message = JSON.parse(payload);
-            if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
-                this.view.openIframe();
-                this.googleLoginId = message.id;
-            }
-
-            (this.iframe as any).postMessage(payload);
+        const message = JSON.parse(payload);
+        if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
+            this.view.openIframe();
+            this.googleLoginId = message.id;
         }
+
+        (this.iframe as any).postMessage(payload);
     }
 
     public isReady(): Promise<any> {
         return new Promise(async (resolve) => {
-            if (this.iframe) {
-                const id = randomId();
-                const subject = new BehaviorSubject<any>('');
-                this.messageHandler.set(id, subject);
-                const timer = setInterval(async () => {
+            const { id, subject } = subjectBuilder(this.messageHandler);
+            const timer = setInterval(async () => {
+                if (this.iframe) {
                     (this.iframe as any).postMessage(JSON.stringify({
                         id,
                         payload: 'Are u ready?',
                         requestType: RequestType.IS_READY,
                     }));
-                    const isOkay = await subject.asObservable().pipe(
+                    const isOkay = await lastValueFrom(subject.asObservable().pipe(
                         filter(message => !!message),
                         take(1),
                         tap(() => {
                             this.messageHandler.delete(id);
                         })
-                    ).toPromise();
+                    ));
                     if (isOkay.payload) {
                         clearInterval(timer);
                         resolve();
                     }
-                }, 500);
-            }
+                }
+            }, 500);
+
         });
     }
 
@@ -92,7 +87,6 @@ export class NativeIframe extends Iframe {
             }
             const message = JSON.parse(event.nativeEvent.data);
             const subject = this.messageHandler.get(message.id);
-            console.log('message received ..', message);
             subject.next(message);
             if (message.id === this.googleLoginId) {
                 this.googleLoginId = '';
@@ -106,15 +100,13 @@ export class NativeIframe extends Iframe {
             const urlParams = new URLSearchParams(returnUrl.search);
             const credentials = urlParams.get('token');
             const existUser = urlParams.get('existUser');
-            console.log('url: ', url);
             if (credentials && existUser && this.googleLoginId) {
                 const token = JSON.parse(credentials);
-                (this.iframe as any).postMessage(JSON.stringify({
-                    id: this.googleLoginId, payload: {
-                        token,
-                        existUser
-                    }, requestType : RequestType.GOOGLE_TOKEN
-                }));
+                const subject = this.messageHandler.get(this.googleLoginId);
+                subject.next({
+                    payload: { token: token.access_token }, id: this.googleLoginId
+                });
+                this.googleLoginId = '';
                 this.view.closeIframe();
             }
         };
