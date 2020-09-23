@@ -8,7 +8,8 @@
   "main": "dist/index.js",
   "dependencies": {
     "iceteaid-core": "^0.0.36-alpha.0",
-    "whatwg-url": "8.1.0"
+    "whatwg-url": "8.1.0",
+    "rxjs": "7.0.0-beta.5"
   },
   "devDependencies": {
     "@types/whatwg-url": "^8.0.0",
