@@ -45,7 +45,7 @@ export class NativeIframe extends Iframe {
             const timer = setInterval(async () => {
                 if (this.iframe) {
                     (this.iframe as any).postMessage(JSON.stringify({
-                        idMessage,
+                        id: idMessage,
                         payload: 'Are u ready?',
                         requestType: RequestType.IS_READY,
                     }));
