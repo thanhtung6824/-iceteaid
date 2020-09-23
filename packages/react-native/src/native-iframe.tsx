@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { lastValueFrom } from 'rxjs';
 
 import { Iframe, subjectBuilder } from 'iceteaid-core';
-import { View, StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
 import { filter, take, tap } from 'rxjs/operators';
@@ -114,33 +114,21 @@ export class NativeIframe extends Iframe {
             }
         };
         return (
-            <View ref={viewRef} style={[styles.container, open ? styles.showContainer : styles.hideContainer ]}>              
-                {os === 'ios' ? 
-                    (<WebView
-                        ref={webviewRef}
-                        startInLoadingState={true}
-                        javaScriptEnabled={true}
-                        source={{ uri: this.endpoint }}
-                        onMessage={onMessage}
-                        userAgent={
-                            'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602'
-                        }
-                        onNavigationStateChange={handleWebViewNavigationStateChange}
-                    />) : (
-                        <WebView
-                            ref={webviewRef}
-                            startInLoadingState={true}
-                            javaScriptEnabled={true}
-                            source={{ uri: this.endpoint }}
-                            onMessage={onMessage}
-                            userAgent={
-                                'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'
-                            }
-                            onNavigationStateChange={handleWebViewNavigationStateChange}
-                        /> 
-                    )
-                }
-            </View>
+            <SafeAreaView ref={viewRef} style={[styles.container, open ? styles.showContainer : styles.hideContainer ]}>
+                <WebView
+                    ref={webviewRef}
+                    startInLoadingState={true}
+                    javaScriptEnabled={true}
+                    source={{ uri: this.endpoint }}
+                    onMessage={onMessage}
+                    userAgent={
+                        os === 'ios' ?
+                            'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602' :
+                            'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'
+                    }
+                    onNavigationStateChange={handleWebViewNavigationStateChange}
+                />
+            </SafeAreaView>
         );
     };
 }
