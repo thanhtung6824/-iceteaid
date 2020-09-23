@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { Iframe } from 'iceteaid-core';
+import { Iframe, randomId } from 'iceteaid-core';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
+import { BehaviorSubject } from 'rxjs';
+import { filter, take, tap } from 'rxjs/operators';
 
 export class NativeIframe extends Iframe {
     protected iframe: WebView | null = null;
@@ -22,7 +24,8 @@ export class NativeIframe extends Iframe {
         }
     }
 
-    public postMessage(payload: string): void {
+    public async postMessage(payload: string): Promise<void> {
+        await this.isReady();
         if (this.iframe) {
             const message = JSON.parse(payload);
             if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
@@ -32,6 +35,34 @@ export class NativeIframe extends Iframe {
 
             (this.iframe as any).postMessage(payload);
         }
+    }
+
+    public isReady(): Promise<any> {
+        return new Promise(async (resolve) => {
+            if (this.iframe) {
+                const id = randomId();
+                const subject = new BehaviorSubject<any>('');
+                this.messageHandler.set(id, subject);
+                const timer = setInterval(async () => {
+                    (this.iframe as any).postMessage(JSON.stringify({
+                        id,
+                        payload: 'Are u ready?',
+                        requestType: RequestType.IS_READY,
+                    }));
+                    const isOkay = await subject.asObservable().pipe(
+                        filter(message => !!message),
+                        take(1),
+                        tap(() => {
+                            this.messageHandler.delete(id);
+                        })
+                    ).toPromise();
+                    if (isOkay.payload) {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 500);
+            }
+        });
     }
 
     public IFrame: React.FC = () => {
@@ -80,11 +111,11 @@ export class NativeIframe extends Iframe {
                 const token = JSON.parse(credentials);
                 (this.iframe as any).postMessage(JSON.stringify({
                     id: this.googleLoginId, payload: {
-                        token: token.access_token,
+                        token,
                         existUser
-                    }, requestType : 'GOOGLE_TOKEN'
+                    }, requestType : RequestType.GOOGLE_TOKEN
                 }));
-                // this.view.closeIframe();
+                this.view.closeIframe();
             }
         };
 

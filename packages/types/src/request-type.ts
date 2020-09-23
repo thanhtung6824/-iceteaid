@@ -10,4 +10,5 @@ export enum RequestType {
     UPDATE_INFO = 'UPDATE_INFO',
     GET_META_DATA = 'GET_META_DATA',
     GOOGLE_TOKEN = 'GOOGLE_TOKEN',
+    IS_READY = 'IS_READY',
 }
