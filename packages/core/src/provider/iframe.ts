@@ -8,9 +8,12 @@ export abstract class Iframe {
     public abstract postMessage(payload: string): void
 
     constructor(protected endpoint: string, protected sdkId: string) {
+        this.bootstrap();
     }
 
     public abstract messageHandler: Map<string, Subject<any>>;
 
     public abstract isReady(): Promise<any>;
+
+    protected abstract bootstrap(): void;
 }

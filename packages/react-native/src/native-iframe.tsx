@@ -13,6 +13,10 @@ export class NativeIframe extends Iframe {
     public messageHandler = new Map<string, any>();
     private googleLoginId = '';
 
+    protected bootstrap(): void {
+        console.log('init iframe ...');
+    }
+
     protected closeIframe(): void {
         if (this.view) {
             this.view.closeIframe();
@@ -64,7 +68,6 @@ export class NativeIframe extends Iframe {
     public IFrame: React.FC = () => {
         const [open, setOpen] = useState(false);
         const os = Platform.OS;
-        console.log('os', os);
         const webviewRef = useCallback((webView: any): void => {
             this.iframe = webView;
         }, []);
@@ -107,7 +110,7 @@ export class NativeIframe extends Iframe {
                 const token = JSON.parse(credentials);
                 const subject = this.messageHandler.get(this.googleLoginId);
                 subject.next({
-                    payload: { token: token.access_token }, id: this.googleLoginId
+                    payload: { token: token.access_token, existUser }, id: this.googleLoginId
                 });
                 this.googleLoginId = '';
                 this.view.closeIframe();

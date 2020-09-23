@@ -1,0 +1,16 @@
+{
+  "name": "iceteaid-web",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "thanhtung6824 <thanhtung6824@gmail.com>",
+  "homepage": "https://github.com/thanhtung6824/-iceteaid#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thanhtung6824/-iceteaid.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
