@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 
-import {Iframe, randomId, subjectBuilder} from 'iceteaid-core';
+import { Iframe, randomId, subjectBuilder } from 'iceteaid-core';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
@@ -49,13 +49,13 @@ export class NativeIframe extends Iframe {
                         payload: 'Are u ready?',
                         requestType: RequestType.IS_READY,
                     }));
-                    const isOkay = await subject.asObservable().pipe(
+                    const isOkay = await lastValueFrom(subject.asObservable().pipe(
                         filter(message => !!message),
                         take(1),
                         tap(() => {
                             this.messageHandler.delete(idMessage);
                         })
-                    ).toPromise();
+                    ));
                     if ((isOkay as any).payload) {
                         clearInterval(timer);
                         resolve();
