@@ -36,6 +36,7 @@ export class NativeIframe extends Iframe {
     public isReady(): Promise<any> {
         return new Promise(async (resolve) => {
             const { id, subject } = subjectBuilder(this.messageHandler);
+
             const timer = setInterval(async () => {
                 if (this.iframe) {
                     (this.iframe as any).postMessage(JSON.stringify({
@@ -87,9 +88,6 @@ export class NativeIframe extends Iframe {
             const message = JSON.parse(event.nativeEvent.data);
             const subject = this.messageHandler.get(message.id);
             subject.next(message);
-            if (message.id === this.googleLoginId) {
-                this.googleLoginId = '';
-            }
         };
 
         const handleWebViewNavigationStateChange = (newNavState: { url: any; canGoForward: any; }) => {
