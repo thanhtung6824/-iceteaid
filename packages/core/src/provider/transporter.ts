@@ -1,4 +1,3 @@
-import { lastValueFrom } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { queryBuilder, subjectBuilder } from '../helpers';
 import { RequestType } from 'iceteaid-type';
@@ -17,13 +16,13 @@ export abstract class Transporter {
         const { id: idMessage, subject } = subjectBuilder(iframe.messageHandler);
 
         iframe.postMessage(queryBuilder(idMessage, requestType, payload));
-        return await lastValueFrom(subject.asObservable().pipe(
+        return await subject.asObservable().pipe(
             filter(message => !!message),
             take(1),
             tap(() => {
                 iframe.messageHandler.delete(idMessage);
             })
-        ));
+        ).toPromise();
 
 
         // if (SdkConfiguration.target === 'react-native') {
