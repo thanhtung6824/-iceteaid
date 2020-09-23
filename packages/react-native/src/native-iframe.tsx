@@ -49,19 +49,19 @@ export class NativeIframe extends Iframe {
                         payload: 'Are u ready?',
                         requestType: RequestType.IS_READY,
                     }));
-                    const isOkay = await lastValueFrom(subject.asObservable().pipe(
-                        filter(message => !!message),
+                    const isOkay = await lastValueFrom<string>(subject.asObservable().pipe(
+                        filter<string>(message => !!message),
                         take(1),
                         tap(() => {
                             this.messageHandler.delete(id);
                         })
                     ));
-                    if ((isOkay as any).payload) {
+                    if (isOkay) {
                         clearInterval(timer);
                         resolve();
                     }
                 }
-            }, 500);
+            }, 1000);
         });
     }
 
