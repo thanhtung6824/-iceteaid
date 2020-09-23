@@ -25,8 +25,7 @@ export class NativeIframe extends Iframe {
         }
     }
 
-    public async postMessage(payload: string): Promise<void> {
-        await this.isReady();
+    public postMessage(payload: string): void {
         const message = JSON.parse(payload);
         if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
             this.view.openIframe();
@@ -38,14 +37,15 @@ export class NativeIframe extends Iframe {
 
     public isReady(): Promise<any> {
         return new Promise(async (resolve) => {
-            const idMessage = randomId();
-            const subject = new BehaviorSubject('');
-            this.messageHandler.set(idMessage, subject);
-
+            // const idMessage = randomId();
+            // const subject = new BehaviorSubject('');
+            // this.messageHandler.set(idMessage, subject);
+            const { id, subject } = subjectBuilder(this.messageHandler);
+            console.log(id, subject);
             const timer = setInterval(async () => {
                 if (this.iframe) {
                     (this.iframe as any).postMessage(JSON.stringify({
-                        id: idMessage,
+                        id,
                         payload: 'Are u ready?',
                         requestType: RequestType.IS_READY,
                     }));
@@ -53,7 +53,7 @@ export class NativeIframe extends Iframe {
                         filter(message => !!message),
                         take(1),
                         tap(() => {
-                            this.messageHandler.delete(idMessage);
+                            this.messageHandler.delete(id);
                         })
                     ));
                     if ((isOkay as any).payload) {
