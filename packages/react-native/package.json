@@ -1,15 +1,15 @@
 {
   "name": "iceteaid-react-native",
-  "version": "0.0.74-alpha.0",
+  "version": "0.0.75-alpha.0",
   "description": "> TODO: description",
   "author": "Tung <thanhtung6824@gmail.com>",
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
-    "iceteaid-core": "^0.0.32-alpha.0",
-    "whatwg-url": "8.1.0",
-    "rxjs": "7.0.0-beta.5"
+    "iceteaid-core": "^0.0.33-alpha.0",
+    "rxjs": "7.0.0-beta.5",
+    "whatwg-url": "8.1.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
