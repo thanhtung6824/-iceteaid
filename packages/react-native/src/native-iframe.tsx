@@ -37,11 +37,7 @@ export class NativeIframe extends Iframe {
 
     public isReady(): Promise<any> {
         return new Promise(async (resolve) => {
-            // const idMessage = randomId();
-            // const subject = new BehaviorSubject('');
-            // this.messageHandler.set(idMessage, subject);
             const { id, subject } = subjectBuilder(this.messageHandler);
-            console.log(id, subject);
             const timer = setInterval(async () => {
                 if (this.iframe) {
                     (this.iframe as any).postMessage(JSON.stringify({
@@ -90,7 +86,6 @@ export class NativeIframe extends Iframe {
             if (!event.nativeEvent && event.nativeEvent.url !== this.endpoint) {
                 return;
             }
-            console.log('message received', event.nativeEvent.data);
             const message = JSON.parse(event.nativeEvent.data);
             const subject = this.messageHandler.get(message.id);
             if (!subject) {
