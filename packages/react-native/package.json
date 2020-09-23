@@ -8,18 +8,11 @@
   "main": "dist/index.js",
   "dependencies": {
     "iceteaid-core": "^0.0.35-alpha.0",
-    "rxjs": "7.0.0-beta.5",
     "whatwg-url": "8.1.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-typescript": "^7.10.4",
     "@types/whatwg-url": "^8.0.0",
     "babel-loader": "^8.1.0",
-    "metro-react-native-babel-preset": "^0.63.0",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "react-native-webview": "^10.9.0",

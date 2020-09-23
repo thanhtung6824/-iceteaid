@@ -7,8 +7,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
-    "iceteaid-type": "^0.0.17-alpha.0",
-    "rxjs": "7.0.0-beta.5"
+    "iceteaid-type": "^0.0.17-alpha.0"
   },
   "gitHead": "dec33862b3de41144e698acf4736f23726bfb959",
   "devDependencies": {

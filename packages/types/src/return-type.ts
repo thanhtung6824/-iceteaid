@@ -1,3 +1,1 @@
-import { ExceptionHandler } from 'iceteaid-core';
-
-export type ReturnType<T> = Promise<T> | ExceptionHandler
+export type ReturnType<T> = Promise<T> | Error
