@@ -57,7 +57,6 @@ export class NativeIframe extends Iframe {
                     }
                 }
             }, 500);
-
         });
     }
 
