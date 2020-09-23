@@ -1,5 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { Iframe, subjectBuilder } from 'iceteaid-core';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
+
+import {Iframe, randomId, subjectBuilder} from 'iceteaid-core';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
@@ -24,6 +26,7 @@ export class NativeIframe extends Iframe {
     }
 
     public async postMessage(payload: string): Promise<void> {
+        await this.isReady();
         const message = JSON.parse(payload);
         if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
             this.view.openIframe();
@@ -35,12 +38,14 @@ export class NativeIframe extends Iframe {
 
     public isReady(): Promise<any> {
         return new Promise(async (resolve) => {
-            const { id, subject } = subjectBuilder(this.messageHandler);
+            const idMessage = randomId();
+            const subject = new BehaviorSubject('');
+            this.messageHandler.set(idMessage, subject);
 
             const timer = setInterval(async () => {
                 if (this.iframe) {
                     (this.iframe as any).postMessage(JSON.stringify({
-                        id,
+                        idMessage,
                         payload: 'Are u ready?',
                         requestType: RequestType.IS_READY,
                     }));
@@ -48,10 +53,10 @@ export class NativeIframe extends Iframe {
                         filter(message => !!message),
                         take(1),
                         tap(() => {
-                            this.messageHandler.delete(id);
+                            this.messageHandler.delete(idMessage);
                         })
                     ).toPromise();
-                    if (isOkay.payload) {
+                    if ((isOkay as any).payload) {
                         clearInterval(timer);
                         resolve();
                     }
