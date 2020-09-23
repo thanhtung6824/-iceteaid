@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
-import { Iframe, randomId, subjectBuilder } from 'iceteaid-core';
-import { View, StyleSheet } from 'react-native';
+import { Iframe, subjectBuilder } from 'iceteaid-core';
+import { View, StyleSheet, Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
 import { filter, take, tap } from 'rxjs/operators';
@@ -122,6 +122,7 @@ export class NativeIframe extends Iframe {
                     onMessage={onMessage}
                     userAgent={'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'}
                     onNavigationStateChange={handleWebViewNavigationStateChange}
+                    applicationNameForUserAgent={Platform.OS === 'ios' ? 'IceteaID-IOS' : 'IceteaID-Android'}
                 />
             </View>
         );
