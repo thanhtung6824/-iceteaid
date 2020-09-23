@@ -120,9 +120,10 @@ export class NativeIframe extends Iframe {
                     javaScriptEnabled={true}
                     source={{ uri: this.endpoint }}
                     onMessage={onMessage}
-                    userAgent={'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'}
+                    userAgent={
+                        'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19' + Platform.OS === 'ios' ? 'IceteaID-IOS' : 'IceteaID-Android'
+                    }
                     onNavigationStateChange={handleWebViewNavigationStateChange}
-                    applicationNameForUserAgent={Platform.OS === 'ios' ? 'IceteaID-IOS' : 'IceteaID-Android'}
                 />
             </View>
         );
