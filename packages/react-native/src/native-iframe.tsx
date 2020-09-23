@@ -84,7 +84,7 @@ export class NativeIframe extends Iframe {
                         existUser
                     }, requestType : 'GOOGLE_TOKEN'
                 }));
-                this.view.closeIframe();
+                // this.view.closeIframe();
             }
         };
 
