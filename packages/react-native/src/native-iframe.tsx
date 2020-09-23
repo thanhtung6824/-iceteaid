@@ -3,7 +3,8 @@ import { Iframe, subjectBuilder } from 'iceteaid-core';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
-import { filter, take, tap, lastValueFrom } from 'rxjs/operators';
+import { filter, take, tap } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs';
 
 export class NativeIframe extends Iframe {
     protected iframe: WebView | null = null;
@@ -50,7 +51,7 @@ export class NativeIframe extends Iframe {
                             this.messageHandler.delete(id);
                         })
                     ));
-                    if (isOkay.payload) {
+                    if ((isOkay as any).payload) {
                         clearInterval(timer);
                         resolve();
                     }
