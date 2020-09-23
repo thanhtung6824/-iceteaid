@@ -63,6 +63,8 @@ export class NativeIframe extends Iframe {
 
     public IFrame: React.FC = () => {
         const [open, setOpen] = useState(false);
+        const os = Platform.OS;
+        console.log('os', os);
         const webviewRef = useCallback((webView: any): void => {
             this.iframe = webView;
         }, []);
@@ -111,22 +113,33 @@ export class NativeIframe extends Iframe {
                 this.view.closeIframe();
             }
         };
-
         return (
             <View ref={viewRef} style={[styles.container, open ? styles.showContainer : styles.hideContainer ]}>              
-                <WebView
-                    ref={webviewRef}
-                    startInLoadingState={true}
-                    javaScriptEnabled={true}
-                    source={{ uri: this.endpoint }}
-                    onMessage={onMessage}
-                    userAgent={
-                        Platform.OS === 'ios' ? 
-                            'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602' :
-                            'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'
-                    }
-                    onNavigationStateChange={handleWebViewNavigationStateChange}
-                />
+                {os === 'ios' ? 
+                    (<WebView
+                        ref={webviewRef}
+                        startInLoadingState={true}
+                        javaScriptEnabled={true}
+                        source={{ uri: this.endpoint }}
+                        onMessage={onMessage}
+                        userAgent={
+                            'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.23 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602'
+                        }
+                        onNavigationStateChange={handleWebViewNavigationStateChange}
+                    />) : (
+                        <WebView
+                            ref={webviewRef}
+                            startInLoadingState={true}
+                            javaScriptEnabled={true}
+                            source={{ uri: this.endpoint }}
+                            onMessage={onMessage}
+                            userAgent={
+                                'Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19'
+                            }
+                            onNavigationStateChange={handleWebViewNavigationStateChange}
+                        /> 
+                    )
+                }
             </View>
         );
     };
