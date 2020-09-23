@@ -43,7 +43,7 @@ export class NativeIframe extends Iframe {
                         payload: 'Are u ready?',
                         requestType: RequestType.IS_READY,
                     }));
-                    const isOkay = subject.asObservable().pipe(
+                    const isOkay = await subject.asObservable().pipe(
                         filter(message => !!message),
                         take(1),
                         tap(() => {
