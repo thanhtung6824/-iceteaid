@@ -7,7 +7,7 @@
     "build:core": "yarn rimraf packages/core/dist && yarn webpack --config packages/core/webpack.config.js --env=core",
     "build:native": "yarn rimraf packages/react-native/dist && yarn webpack --config packages/react-native/webpack.config.js --env=react-native",
     "build:web": "yarn rimraf packages/web/dist && yarn webpack --config packages/web/webpack.config.js --env=web",
-    "build": "yarn build:types && yarn build:core && yarn build:native",
+    "build": "yarn build:types && yarn build:core && yarn build:native && yarn build:web",
     "lerna:publish": "lerna publish from-package --canary --yes",
     "lerna:version": "lerna version prepatch --yes",
     "release": "yarn build && yarn lerna:publish",
