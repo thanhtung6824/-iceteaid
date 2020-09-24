@@ -8,7 +8,7 @@ export class SdkBase {
     private _transport: Transporter | undefined;
     private _iframe: Iframe | undefined;
 
-    private readonly sdkId: string;
+    public readonly sdkId: string;
     public readonly endpoint: string;
     public readonly user: UserApi;
     public readonly auth: AuthApi;
@@ -27,13 +27,13 @@ export class SdkBase {
             apiKey: apiKey,
             target: SdkConfiguration.target,
             baseUrl: SdkConfiguration.baseUrl,
+            origin: window.location.origin,
         }));
-        SdkConfiguration.Instance = this;
     }
 
     public get instance(): SdkBase {
         if (!SdkBase.instance) {
-            SdkBase.instance = new SdkBase(this.apiKey);
+            SdkBase.instance = this;
         }
 
         return SdkBase.instance;
@@ -41,7 +41,7 @@ export class SdkBase {
 
     public get transporter(): Transporter {
         if (!this._transport) {
-            this._transport = new SdkConfiguration.Transporter(this.endpoint);
+            this._transport = new SdkConfiguration.Transporter(this.endpoint, this.iframe);
         }
 
         return this._transport;

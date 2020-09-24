@@ -24,6 +24,3 @@ export const IceteaId = sdkBuilder(SdkNative , {
     Transporter: NativeTransporter,
     Iframe: NativeIframe,
 });
-
-
-export { SdkConfiguration } from 'iceteaid-core';

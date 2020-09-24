@@ -4,23 +4,24 @@ import { queryBuilder, subjectBuilder } from '../helpers';
 import { RequestType } from 'iceteaid-type';
 import { Iframe } from './iframe';
 
-export abstract class Transporter {
+export abstract class Transporter<View extends Iframe = Iframe> {
     constructor(
-        protected endpoint: string
+        protected endpoint: string,
+        protected iframe: View
     ) {
         this.boostrap();
     }
 
     protected abstract boostrap () : void
-    public async post(iframe: Iframe, requestType: RequestType, payload: Record<string, any>): Promise<any> {
-        await iframe.isReady();
-        const { id, subject } = subjectBuilder(iframe.messageHandler);
-        iframe.postMessage(queryBuilder(id, requestType, payload));
+    public async post(requestType: RequestType, payload: Record<string, any>): Promise<any> {
+        await this.iframe.isReady();
+        const { id, subject } = subjectBuilder(this.iframe.messageHandler);
+        this.iframe.postMessage(queryBuilder(id, requestType, payload));
         return await lastValueFrom(subject.asObservable().pipe(
             filter(message => !!message),
             take(1),
             tap(() => {
-                iframe.messageHandler.delete(id);
+                this.iframe.messageHandler.delete(id);
             })
         ));
     }

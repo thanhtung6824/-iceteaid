@@ -1,4 +1,4 @@
-import { ExceptionType } from 'iceteaid-type';
+import {ExceptionType} from 'iceteaid-type';
 
 export class ExceptionHandler extends Error {
     constructor(code: ExceptionType, message: string) {
@@ -20,5 +20,12 @@ export function missingParameter(param: string): ExceptionHandler {
     return new ExceptionHandler(
         ExceptionType.MISSING_PARAMETER,
         `Parameter ${param} is required`
+    );
+}
+
+export function invalidParameter(param: string): ExceptionHandler {
+    return new ExceptionHandler(
+        ExceptionType.INVALID_PARAMETER,
+        `Parameter ${param} is invalid`
     );
 }
