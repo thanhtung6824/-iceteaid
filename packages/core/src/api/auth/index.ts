@@ -1,7 +1,6 @@
-import { BaseApi } from '../base-api';
-import { missingParameter, invalidParameter } from '../..';
-import { RequestType, ReturnType } from 'iceteaid-type';
-import { SdkConfiguration } from '../..';
+import {BaseApi} from '../base-api';
+import {invalidParameter, missingParameter, SdkConfiguration} from '../..';
+import {RequestType, ReturnType} from 'iceteaid-type';
 
 export class AuthApi extends BaseApi {
     public sendOtp(emailOrPhone: string, channel: string): ReturnType<any> {
@@ -34,5 +33,9 @@ export class AuthApi extends BaseApi {
             return this.transporter.post(RequestType.LOGIN_WITH_GOOGLE, {});
         }
         window.location.href = `http://3k1.theydont.work/account/google?sdkId=${this.iceteaId.sdkId}&redirectUri=${redirectUri}`;
+    }
+
+    public logout(): ReturnType<any> {
+        return this.transporter.post(RequestType.LOG_OUT, {});
     }
 }

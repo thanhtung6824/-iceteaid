@@ -32,6 +32,13 @@ export class SdkBase {
         SdkBase.instance = this;
     }
 
+    public static getInstance(apiKey: string): SdkBase {
+        if (!SdkBase.instance) {
+            SdkBase.instance = new SdkBase(apiKey);
+        }
+        return SdkBase.instance;
+    }
+
     public get transporter(): Transporter {
         if (!this._transport) {
             this._transport = new SdkConfiguration.Transporter(this.endpoint, this.iframe);
