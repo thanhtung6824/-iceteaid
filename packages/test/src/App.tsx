@@ -1,36 +1,52 @@
-import React, {useEffect} from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from 'react-router-dom';
 import { IceteaId } from 'iceteaid-web';
 
-const i = new IceteaId('xx');
-const instance = IceteaId.instance;
-
-
-function App() {
-    useEffect(() => {
-        const test = async () => {
-            try {
-                const data = await instance.user.generateEncryptionKey();
-                console.log('data', data);
-            } catch (err) {
-                console.log('err from effect', err);
-            }
-            // const data = await instance.auth.sendOtp('+840834122419', 'sms');
-        };
-        test();
-    }, []);
+export default function App() {
+    const instance = (IceteaId as any).getInstance('xxx');
     return (
-        <div>
-            <button onClick={async () => {
-                const key = await instance.auth.loginWithGoogle('http://localhost:3002');
-                console.log(key);
-                // const key1 = await instance1.user.generateEncryptionKey();
-                // console.log(key1);
-            }}>
-                Test
-            </button>
-        </div>
+        <Router>
+            <div>
+
+                {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                <Switch>
+                    <Route path="/about">
+                        <About/>
+                    </Route>
+                    <Route path="/users">
+                        <Users/>
+                    </Route>
+                    <Route path="/">
+                        <Home/>
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
 
-export default App;
+function Home() {
+    const instance = (IceteaId as any).getInstance('xxx');
+    useEffect(() => {
+        const test = async () => {
+            const key = await instance.user.generateEncryptionKey();
+            console.log(key);
+        };
+        test();
+    }, []);
+    return <h2>Home</h2>;
+}
+
+function About() {
+    return <h2>About</h2>;
+}
+
+function Users() {
+    return <h2>Users</h2>;
+}
