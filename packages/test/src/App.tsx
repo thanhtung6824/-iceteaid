@@ -3,7 +3,8 @@ import './App.css';
 import { IceteaId } from 'iceteaid-web';
 
 const i = new IceteaId('xx');
-const instance = i.instance;
+const instance = IceteaId.instance;
+
 
 function App() {
     useEffect(() => {

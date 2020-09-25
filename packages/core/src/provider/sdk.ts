@@ -12,7 +12,7 @@ export class SdkBase {
     public readonly endpoint: string;
     public readonly user: UserApi;
     public readonly auth: AuthApi;
-    private static instance: SdkBase;
+    public static instance: SdkBase;
     private readonly apiKey: string
 
     constructor(apiKey: string) {
@@ -29,14 +29,7 @@ export class SdkBase {
             baseUrl: SdkConfiguration.baseUrl,
             origin: window.location.origin,
         }));
-    }
-
-    public get instance(): SdkBase {
-        if (!SdkBase.instance) {
-            SdkBase.instance = this;
-        }
-
-        return SdkBase.instance;
+        SdkBase.instance = this;
     }
 
     public get transporter(): Transporter {
