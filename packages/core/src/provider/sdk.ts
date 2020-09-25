@@ -27,7 +27,7 @@ export class SdkBase {
             apiKey: apiKey,
             target: SdkConfiguration.target,
             baseUrl: SdkConfiguration.baseUrl,
-            origin: window.location.origin,
+            // origin: window.location.origin,
         }));
     }
 
