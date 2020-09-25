@@ -1,5 +1,5 @@
-import { lastValueFrom } from 'rxjs';
-import { filter, take, tap } from 'rxjs/operators';
+import { lastValueFrom, throwError } from 'rxjs';
+import { filter, take, map, tap } from 'rxjs/operators';
 import { queryBuilder, subjectBuilder } from '../helpers';
 import { RequestType } from 'iceteaid-type';
 import { Iframe } from './iframe';
@@ -17,8 +17,12 @@ export abstract class Transporter<View extends Iframe = Iframe> {
         await this.iframe.isReady();
         const { id, subject } = subjectBuilder(this.iframe.messageHandler);
         this.iframe.postMessage(queryBuilder(id, requestType, payload));
-        return await lastValueFrom(subject.asObservable().pipe(
+        return lastValueFrom(subject.asObservable().pipe(
             filter(message => !!message),
+            map(message => {
+                if (message.payload.err) return lastValueFrom(throwError(message));
+                return message;
+            }),
             take(1),
             tap(() => {
                 this.iframe.messageHandler.delete(id);

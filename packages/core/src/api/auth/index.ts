@@ -33,7 +33,6 @@ export class AuthApi extends BaseApi {
         if (!redirectUri) {
             return this.transporter.post(RequestType.LOGIN_WITH_GOOGLE, {});
         }
-        window.location.href = `http://localhost:3001/account/google?sdkId=${this.iceteaId.sdkId}&redirectUri=${redirectUri}`;
-        // window.location.href = `http://3k1.theydont.work/account/google?sdkId=${this.iceteaId.sdkId}&redirectUri=${redirectUri}`;
+        window.location.href = `http://3k1.theydont.work/account/google?sdkId=${this.iceteaId.sdkId}&redirectUri=${redirectUri}`;
     }
 }

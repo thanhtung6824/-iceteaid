@@ -158,10 +158,12 @@ const styles = StyleSheet.create({
         display: 'none'
     },
     showContainer: {
-        zIndex: 10000
+        zIndex: 10000,
+        elevation: 10000,
     },
     hideContainer: {
         zIndex: -10000,
+        elevation: -10000,
     },
     activityIndicatorStyle: {
         flex: 1,

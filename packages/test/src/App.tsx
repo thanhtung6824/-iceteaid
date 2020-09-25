@@ -8,8 +8,13 @@ const instance = i.instance;
 function App() {
     useEffect(() => {
         const test = async () => {
-            const data = await instance.user.getDataAfterRedirect();
-            console.log('data', data);
+            try {
+                const data = await instance.user.generateEncryptionKey();
+                console.log('data', data);
+            } catch (err) {
+                console.log('err from effect', err);
+            }
+            // const data = await instance.auth.sendOtp('+840834122419', 'sms');
         };
         test();
     }, []);
