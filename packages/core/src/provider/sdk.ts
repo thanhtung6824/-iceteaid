@@ -5,8 +5,8 @@ import { Transporter } from './transporter';
 import { AuthApi } from '../api/auth';
 
 export class SdkBase {
-    private _transport: Transporter | undefined;
-    private _iframe: Iframe | undefined;
+    private static _transport: Map<string, Transporter> = new Map();
+    private static _iframe: Map<string, Iframe> = new Map();
 
     public readonly sdkId: string;
     public readonly endpoint: string;
@@ -39,18 +39,23 @@ export class SdkBase {
     }
 
     public get transporter(): Transporter {
-        if (!this._transport) {
-            this._transport = new SdkConfiguration.Transporter(this.endpoint, this.iframe);
+        if (!SdkBase._transport.has(this.sdkId)) {
+            SdkBase._transport.set(
+                this.sdkId,
+                new SdkConfiguration.Transporter(this.endpoint, this.iframe)
+            );
         }
-
-        return this._transport;
+        return <Transporter>SdkBase._transport.get(this.sdkId);
     }
 
     public get iframe(): Iframe {
-        if (!this._iframe) {
-            this._iframe = new SdkConfiguration.Iframe(this.endpoint, this.sdkId);
+        if (!SdkBase._iframe.has(this.sdkId)) {
+            SdkBase._iframe.set(
+                this.sdkId,
+                new SdkConfiguration.Iframe(this.endpoint, this.sdkId)
+            );
         }
-        return this._iframe;
+        return <Iframe>SdkBase._iframe.get(this.sdkId);
     }
 }
 type ConstructorOf<C> = { new (...args: any[]): C };
