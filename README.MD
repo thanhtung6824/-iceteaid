@@ -2,7 +2,7 @@
 
 >  IceteaID Passwordless authentication.
 
-##Installation
+## Installation
 ```bash
 yarn add iceteaid-web # If you're targeting web browsers
 yarn add iceteaid-react-native # If you're targeting React Native
