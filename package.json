@@ -11,7 +11,8 @@
     "lerna:publish": "lerna publish from-package --canary --yes",
     "lerna:version": "lerna version prepatch --yes",
     "release": "yarn build && yarn lerna:publish",
-    "eslint:check": "yarn eslint packages"
+    "eslint:check": "yarn eslint packages",
+    "test": "jest"
   },
   "devDependencies": {
     "lerna": "^3.22.1",

@@ -1,4 +1,4 @@
-import {ExceptionType} from 'iceteaid-type';
+import { ExceptionType } from 'iceteaid-type';
 
 export class ExceptionHandler extends Error {
     constructor(code: ExceptionType, message: string) {

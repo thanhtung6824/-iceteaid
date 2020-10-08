@@ -14,7 +14,7 @@ global.atob = (b64Encoded) => Buffer.from(b64Encoded, 'base64').toString('binary
 
 export class SdkNative extends SdkBase {
     public get IFrame(): React.FC {
-        return (this.iframe as unknown as NativeIframe).IFrame;
+        return (this.iframe as NativeIframe).IFrame;
     }
 }
 

@@ -12,11 +12,17 @@
     "whatwg-url": "8.1.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.14",
     "@types/whatwg-url": "^8.0.0",
     "babel-loader": "^8.1.0",
+    "import-fresh": "^3.2.1",
+    "jest": "^26.4.2",
     "react": "^16.13.1",
     "react-native": "^0.63.2",
     "react-native-webview": "^10.9.0",
+    "sinon": "^9.0.3",
     "webpack-node-externals": "^2.5.2"
   },
   "gitHead": "dec33862b3de41144e698acf4736f23726bfb959"

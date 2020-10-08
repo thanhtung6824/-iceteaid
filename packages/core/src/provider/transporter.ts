@@ -9,16 +9,16 @@ export abstract class Transporter<View extends Iframe = Iframe> {
         protected endpoint: string,
         protected iframe: View
     ) {
-        this.boostrap();
+        if (this.bootstrap) this.bootstrap();
     }
 
-    protected abstract boostrap () : void
+    protected abstract bootstrap () : void
     public async post(requestType: RequestType, payload: Record<string, any>): Promise<any> {
         await this.iframe.isReady();
         const { id, subject } = subjectBuilder(this.iframe.messageHandler);
         this.iframe.postMessage(queryBuilder(id, requestType, payload));
         return lastValueFrom(subject.asObservable().pipe(
-            filter(message => !!message),
+            filter(message => !!message && message.id === id),
             map(message => {
                 if (message.payload.err) return lastValueFrom(throwError(message));
                 return message;

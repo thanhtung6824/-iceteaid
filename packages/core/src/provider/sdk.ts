@@ -29,6 +29,7 @@ export class SdkBase {
             baseUrl: SdkConfiguration.baseUrl,
             // origin: window.location.origin,
         }));
+        SdkBase.instance = this;
     }
 
     public static getInstance(apiKey: string): SdkBase {

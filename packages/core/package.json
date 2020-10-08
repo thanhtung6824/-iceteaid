@@ -12,6 +12,11 @@
   },
   "gitHead": "dec33862b3de41144e698acf4736f23726bfb959",
   "devDependencies": {
-    "@types/whatwg-url": "^8.0.0"
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.14",
+    "@types/whatwg-url": "^8.0.0",
+    "jest": "^26.4.2",
+    "sinon": "^9.0.3"
   }
 }

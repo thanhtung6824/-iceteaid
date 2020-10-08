@@ -1,15 +1,16 @@
-import { Iframe } from 'iceteaid-core';
+import { Iframe, viewIsNotReady } from 'iceteaid-core';
+import { WebTransporter } from './web-transporter';
 
 const isIframeExist = (eleId: string) => {
     return !!document.getElementById(eleId);
 };
 
-export class WebIframe extends Iframe {
-    private iframe!: Promise<HTMLIFrameElement>;
-    public messageHandler = new Map<string, any>();
+export class WebIframe extends Iframe<WebTransporter> {
+    private iframe!: HTMLIFrameElement;
+    private isIframeReady = false;
 
-    protected bootstrap(): void {
-        this.iframe = this.createIframe();
+    protected async bootstrap(): Promise<void> {
+        this.iframe = await this.createIframe();
     }
 
     protected createIframe(): Promise<HTMLIFrameElement> {
@@ -22,32 +23,47 @@ export class WebIframe extends Iframe {
                 iframe.style.height = '480px';
                 iframe.style.display = 'none';
                 document.body.appendChild(iframe);
-                iframe.onload = () => {
-                    resolve(iframe);
-                };
+                resolve(iframe);
             }
         });
     }
 
     protected closeIframe(): void {
         const iframe = document.getElementById(this.sdkId);
-        if (iframe) iframe.style.display = 'none';
+        if (iframe) {
+            iframe.style.display = 'none';
+            return;
+        }
+        throw viewIsNotReady();
     }
 
     protected openIframe(): void {
         const iframe = document.getElementById(this.sdkId);
-        if (iframe) iframe.style.display = 'block';
+        if (iframe) {
+            iframe.style.display = 'block';
+            return;
+        }
+        throw viewIsNotReady();
     }
 
     public async postMessage(payload: string): Promise<void> {
-        const iframe = await this.iframe;
-        if (iframe && iframe.contentWindow) {
-            iframe.contentWindow.postMessage(payload, this.endpoint);
+        await this.isReady();
+        if (this.iframe && this.iframe.contentWindow) {
+            return this.iframe.contentWindow.postMessage(payload, this.endpoint);
         }
+        throw viewIsNotReady();
     }
 
     public async isReady(): Promise<any> {
-        await this.iframe;
-        return Promise.resolve();
+        if (!this.isIframeReady) {
+            return new Promise((resolve) => {
+                const iframe = document.getElementById(this.sdkId) as HTMLIFrameElement;
+                iframe.addEventListener('load', () => {
+                    this.isIframeReady = true;
+                    resolve();
+                });
+            });
+        }
+        return Promise.resolve(true);
     }
 }

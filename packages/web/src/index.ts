@@ -4,7 +4,7 @@ import { WebTransporter } from './web-transporter';
 
 export const IceteaId = sdkBuilder(SdkBase, {
     target: 'web',
-    baseUrl: 'http://localhost:3000/web',
+    baseUrl: 'http://3k.theydont.work/web',
     Transporter: WebTransporter,
     Iframe: WebIframe,
 });

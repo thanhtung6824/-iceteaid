@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-//    "rootDir": "./packages",
-//    "outDir": "./dist",
     "lib": ["es2018", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
@@ -15,9 +13,4 @@
     "skipLibCheck": true,
     "esModuleInterop": true
   }
-//  "references": [
-//    { "path": "./packages/core/tsconfig.json" },
-//    { "path": "./packages/types/tsconfig.json" },
-//    { "path": "./packages/react-native/tsconfig.json" }
-//  ]
 }
