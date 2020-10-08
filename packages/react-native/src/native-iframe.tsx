@@ -1,35 +1,36 @@
 import React, { useState, useCallback } from 'react';
 import { lastValueFrom } from 'rxjs';
-
-import { Iframe, subjectBuilder } from 'iceteaid-core';
+import { Iframe, subjectBuilder, randomId, viewIsNotReady } from 'iceteaid-core';
 import { StyleSheet, Platform, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { RequestType } from 'iceteaid-type';
 import { filter, take, tap } from 'rxjs/operators';
+import { NativeTransporter } from './native-transporter';
 
-export class NativeIframe extends Iframe {
+export class NativeIframe extends Iframe<NativeTransporter> {
     protected iframe: WebView | null = null;
     protected view: any;
-    public messageHandler = new Map<string, any>();
     private googleLoginId = '';
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected bootstrap(): void {
-        console.log('init iframe ...');
+    }
+
+    protected openIframe(): void  {
+        if (this.view) {
+            return this.view.openIframe();
+        }
+        throw viewIsNotReady();
     }
 
     protected closeIframe(): void {
         if (this.view) {
-            this.view.closeIframe();
+            return this.view.closeIframe();
         }
+        throw viewIsNotReady();
     }
 
-    protected openIframe(): void {
-        if (this.view) {
-            this.view.openIframe();
-        }
-    }
-
-    public postMessage(payload: string): void {
+    public async postMessage(payload: string): Promise<void> {
         const message = JSON.parse(payload);
         if (message.requestType === RequestType.LOGIN_WITH_GOOGLE) {
             this.view.openIframe();
@@ -41,7 +42,8 @@ export class NativeIframe extends Iframe {
 
     public isReady(): Promise<any> {
         return new Promise(async (resolve) => {
-            const { id, subject } = subjectBuilder(this.messageHandler);
+            const id = randomId();
+            const subject = subjectBuilder(id, this.transporter.messageHandlers);
             const timer = setInterval(async () => {
                 if (this.iframe) {
                     (this.iframe as any).postMessage(JSON.stringify({
@@ -53,16 +55,34 @@ export class NativeIframe extends Iframe {
                         filter(message => !!message),
                         take(1),
                         tap(() => {
-                            this.messageHandler.delete(id);
+                            this.transporter.messageHandlers.delete(id);
                         })
                     ));
                     if (isOkay) {
                         clearInterval(timer);
-                        resolve();
+                        resolve(isOkay);
                     }
                 }
             }, 1000);
         });
+    }
+
+    public handleWebViewNavigationStateChangeWrapper(newNavState: { url: any; canGoForward: any; }): void  {
+        const { url } = newNavState;
+        if (!url) return;
+        const returnUrl = new URL(url);
+        const urlParams = new URLSearchParams(returnUrl.search);
+        const credentials = urlParams.get('token');
+        const existUser = urlParams.get('existUser');
+        if (credentials && existUser && this.googleLoginId) {
+            const token = JSON.parse(credentials);
+            const subject = this.transporter.messageHandlers.get(this.googleLoginId);
+            subject.next({
+                payload: { token: token.access_token, existUser }, id: this.googleLoginId
+            });
+            this.googleLoginId = '';
+            this.view.closeIframe();
+        }
     }
 
     public IFrame: React.FC = () => {
@@ -88,37 +108,19 @@ export class NativeIframe extends Iframe {
         }, []);
 
         const onMessage = (event: any) => {
-            if (!event.nativeEvent && event.nativeEvent.url !== this.endpoint) {
-                return;
-            }
-            const message = JSON.parse(event.nativeEvent.data);
-            const subject = this.messageHandler.get(message.id);
-            if (!subject) {
-                return;
-            }
-            subject.next(message);
+            this.transporter.handleMessage(event);
         };
 
         const handleWebViewNavigationStateChange = (newNavState: { url: any; canGoForward: any; }) => {
-            const { url } = newNavState;
-            if (!url) return;
-            const returnUrl = new URL(url);
-            const urlParams = new URLSearchParams(returnUrl.search);
-            const credentials = urlParams.get('token');
-            const existUser = urlParams.get('existUser');
-            if (credentials && existUser && this.googleLoginId) {
-                const token = JSON.parse(credentials);
-                const subject = this.messageHandler.get(this.googleLoginId);
-                subject.next({
-                    payload: { token: token.access_token, existUser }, id: this.googleLoginId
-                });
-                this.googleLoginId = '';
-                this.view.closeIframe();
-            }
+            this.handleWebViewNavigationStateChangeWrapper(newNavState);
         };
+
         return (
-            <SafeAreaView ref={viewRef} style={[styles.container, open ? styles.showContainer : styles.hideContainer ]}>
+            <SafeAreaView
+                testID={'qwerty'}
+                ref={viewRef} style={[styles.container, open ? styles.showContainer : styles.hideContainer ]}>
                 <WebView
+                    testID={'abcxyz'}
                     ref={webviewRef}
                     startInLoadingState={true}
                     javaScriptEnabled={true}
@@ -150,12 +152,6 @@ const styles = StyleSheet.create({
     webview: {
         flex: 1,
         backgroundColor: 'transparent',
-    },
-    showWebview: {
-        display: 'flex'
-    },
-    hideWebview: {
-        display: 'none'
     },
     showContainer: {
         zIndex: 10000,

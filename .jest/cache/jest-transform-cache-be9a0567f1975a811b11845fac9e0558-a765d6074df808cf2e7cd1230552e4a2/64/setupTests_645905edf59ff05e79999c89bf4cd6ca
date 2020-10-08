@@ -1,0 +1,7 @@
+ab94aff0db5cb800bc5820c2ee85c885
+"use strict";var _browserEnv = _interopRequireDefault(require("browser-env"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+beforeEach(function () {
+  jest.resetModules();
+  (0, _browserEnv.default)();
+});

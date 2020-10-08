@@ -1,0 +1,305 @@
+a9b0e586da30a179acc0facbcd47bcdb
+"use strict";
+/**
+ * @jest-environment jsdom
+ */
+
+var __awaiter = void 0 && (void 0).__awaiter || function (thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function (resolve) {
+      resolve(value);
+    });
+  }
+
+  return new (P || (P = Promise))(function (resolve, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+
+    function step(result) {
+      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+
+var __generator = void 0 && (void 0).__generator || function (thisArg, body) {
+  var _ = {
+    label: 0,
+    sent: function () {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    },
+    trys: [],
+    ops: []
+  },
+      f,
+      y,
+      t,
+      g;
+  return g = {
+    next: verb(0),
+    "throw": verb(1),
+    "return": verb(2)
+  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+    return this;
+  }), g;
+
+  function verb(n) {
+    return function (v) {
+      return step([n, v]);
+    };
+  }
+
+  function step(op) {
+    if (f) throw new TypeError("Generator is already executing.");
+
+    while (_) try {
+      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+      if (y = 0, t) op = [op[0] & 2, t.value];
+
+      switch (op[0]) {
+        case 0:
+        case 1:
+          t = op;
+          break;
+
+        case 4:
+          _.label++;
+          return {
+            value: op[1],
+            done: false
+          };
+
+        case 5:
+          _.label++;
+          y = op[1];
+          op = [0];
+          continue;
+
+        case 7:
+          op = _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+
+        default:
+          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+            _ = 0;
+            continue;
+          }
+
+          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+            _.label = op[1];
+            break;
+          }
+
+          if (op[0] === 6 && _.label < t[1]) {
+            _.label = t[1];
+            t = op;
+            break;
+          }
+
+          if (t && _.label < t[2]) {
+            _.label = t[2];
+
+            _.ops.push(op);
+
+            break;
+          }
+
+          if (t[2]) _.ops.pop();
+
+          _.trys.pop();
+
+          continue;
+      }
+
+      op = body.call(thisArg, _);
+    } catch (e) {
+      op = [6, e];
+      y = 0;
+    } finally {
+      f = t = 0;
+    }
+
+    if (op[0] & 5) throw op[1];
+    return {
+      value: op[0] ? op[1] : void 0,
+      done: true
+    };
+  }
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var mocks_1 = require("../mocks");
+
+var src_1 = require("../../src");
+
+var createResponse = function (id) {
+  return {
+    id: id,
+    payload: {
+      err: false,
+      msg: 'Im a response'
+    }
+  };
+};
+
+it('Will post message', function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var transporter, iframe, payload;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          transporter = mocks_1.createTestTransporter();
+          iframe = mocks_1.createTestIframe();
+          payload = src_1.queryBuilder('TEST_REQUEST', {
+            msg: 'Hey! Im test'
+          });
+          transporter.post(iframe, payload);
+          return [4
+          /*yield*/
+          , iframe.isReady()];
+
+        case 1:
+          _a.sent();
+
+          expect(iframe.postMessage).toBeCalledWith(JSON.stringify(payload));
+          return [2
+          /*return*/
+          ];
+      }
+    });
+  });
+});
+it('Throw message if have error', function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var transporter, iframe, payload, promise;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          transporter = mocks_1.createTestTransporter();
+          iframe = mocks_1.createTestIframe();
+          payload = src_1.queryBuilder('TEST_REQUEST', {
+            msg: 'Hey! Im test'
+          });
+          promise = transporter.post(iframe, payload);
+          return [4
+          /*yield*/
+          , iframe.isReady()];
+
+        case 1:
+          _a.sent();
+
+          transporter.on(JSON.stringify({
+            id: payload.id,
+            payload: {
+              err: true,
+              msg: 'What! Error'
+            }
+          }));
+          return [4
+          /*yield*/
+          , expect(promise).rejects.toStrictEqual({
+            id: payload.id,
+            payload: {
+              err: true,
+              msg: 'What! Error'
+            }
+          })];
+
+        case 2:
+          _a.sent();
+
+          expect(transporter.messageHandlers.get(payload.id)).toBe(undefined);
+          return [2
+          /*return*/
+          ];
+      }
+    });
+  });
+}); //
+
+it('Ignore message if difference id', function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var transporter, iframe, payload;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          transporter = mocks_1.createTestTransporter();
+          iframe = mocks_1.createTestIframe();
+          payload = src_1.queryBuilder('TEST_REQUEST', {
+            msg: 'Hey! Im test'
+          });
+          transporter.post(iframe, payload);
+          return [4
+          /*yield*/
+          , iframe.isReady()];
+
+        case 1:
+          _a.sent();
+
+          transporter.on(JSON.stringify(createResponse('abc')));
+          expect(transporter.messageHandlers.keys().next().value).toEqual(payload.id);
+          expect(transporter.messageHandlers.values().next().value._value).toEqual('');
+          return [2
+          /*return*/
+          ];
+      }
+    });
+  });
+});
+it('Will receive message', function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var transporter, iframe, payload, promise;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          transporter = mocks_1.createTestTransporter();
+          iframe = mocks_1.createTestIframe();
+          payload = src_1.queryBuilder('TEST_REQUEST', {
+            msg: 'Hey! Im test'
+          });
+          promise = transporter.post(iframe, payload);
+          return [4
+          /*yield*/
+          , iframe.isReady()];
+
+        case 1:
+          _a.sent();
+
+          transporter.on(JSON.stringify(createResponse(payload.id)));
+          return [4
+          /*yield*/
+          , expect(promise).resolves.toStrictEqual(createResponse(payload.id))];
+
+        case 2:
+          _a.sent();
+
+          expect(transporter.messageHandlers.get(payload.id)).toBe(undefined);
+          return [2
+          /*return*/
+          ];
+      }
+    });
+  });
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2FkbWluMS9EZXNrdG9wL0BpY2V0ZWFpZC9wYWNrYWdlcy9jb3JlL3Rlc3QvcHJvdmlkZXIvdHJhbnNwb3J0ZXIudGVzdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBSUEsSUFBQSxPQUFBLEdBQUEsT0FBQSxDQUFBLFVBQUEsQ0FBQTs7QUFDQSxJQUFBLEtBQUEsR0FBQSxPQUFBLENBQUEsV0FBQSxDQUFBOztBQUdBLElBQU0sY0FBYyxHQUFHLFVBQUMsRUFBRCxFQUFXO0FBQzlCLFNBQU87QUFDSCxJQUFBLEVBQUUsRUFBQSxFQURDO0FBRUgsSUFBQSxPQUFPLEVBQUU7QUFBRSxNQUFBLEdBQUcsRUFBRSxLQUFQO0FBQWMsTUFBQSxHQUFHLEVBQUU7QUFBbkI7QUFGTixHQUFQO0FBSUgsQ0FMRDs7QUFPQSxFQUFFLENBQUUsbUJBQUYsRUFBdUIsWUFBQTtBQUFBLFNBQUEsU0FBQSxDQUFBLEtBQUEsQ0FBQSxFQUFBLEtBQUEsQ0FBQSxFQUFBLEtBQUEsQ0FBQSxFQUFBLFlBQUE7Ozs7O0FBQ2YsVUFBQSxXQUFXLEdBQUcsT0FBQSxDQUFBLHFCQUFBLEVBQWQ7QUFDQSxVQUFBLE1BQU0sR0FBRyxPQUFBLENBQUEsZ0JBQUEsRUFBVDtBQUNBLFVBQUEsT0FBTyxHQUFHLEtBQUEsQ0FBQSxZQUFBLENBQWEsY0FBYixFQUE0QztBQUFFLFlBQUEsR0FBRyxFQUFFO0FBQVAsV0FBNUMsQ0FBVjtBQUNOLFVBQUEsV0FBVyxDQUFDLElBQVosQ0FBaUIsTUFBakIsRUFBeUIsT0FBekI7QUFDQSxpQkFBQSxDQUFBO0FBQUE7QUFBQSxZQUFNLE1BQU0sQ0FBQyxPQUFQLEVB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c3QtZW52aXJvbm1lbnQganNkb21cbiAqL1xuXG5pbXBvcnQgeyBjcmVhdGVUZXN0SWZyYW1lLCBjcmVhdGVUZXN0VHJhbnNwb3J0ZXIgfSBmcm9tICcuLi9tb2Nrcyc7XG5pbXBvcnQgeyBxdWVyeUJ1aWxkZXIgfSBmcm9tICcuLi8uLi9zcmMnO1xuaW1wb3J0IHsgUmVxdWVzdFR5cGUgfSBmcm9tICdpY2V0ZWFpZC10eXBlJztcblxuY29uc3QgY3JlYXRlUmVzcG9uc2UgPSAoaWQ6IHN0cmluZykgPT4ge1xuICAgIHJldHVybiB7XG4gICAgICAgIGlkLFxuICAgICAgICBwYXlsb2FkOiB7IGVycjogZmFsc2UsIG1zZzogJ0ltIGEgcmVzcG9uc2UnIH1cbiAgICB9O1xufTtcblxuaXQgKCdXaWxsIHBvc3QgbWVzc2FnZScsIGFzeW5jICgpID0+IHtcbiAgICBjb25zdCB0cmFuc3BvcnRlciA9IGNyZWF0ZVRlc3RUcmFuc3BvcnRlcigpO1xuICAgIGNvbnN0IGlmcmFtZSA9IGNyZWF0ZVRlc3RJZnJhbWUoKTtcbiAgICBjb25zdCBwYXlsb2FkID0gcXVlcnlCdWlsZGVyKCdURVNUX1JFUVVFU1QnIGFzIFJlcXVlc3RUeXBlLCB7IG1zZzogJ0hleSEgSW0gdGVzdCcgfSk7XG4gICAgdHJhbnNwb3J0ZXIucG9zdChpZnJhbWUsIHBheWxvYWQpO1xuICAgIGF3YWl0IGlmcmFtZS5pc1JlYWR5KCk7XG5cbiAgICBleHBlY3QoaWZyYW1lLnBvc3RNZXNzYWdlKS50b0JlQ2FsbGVkV2l0aChKU09OLnN0cmluZ2lmeShwYXlsb2FkKSk7XG59KTtcblxuaXQgKCdUaHJvdyBtZXNzYWdlIGlmIGhhdmUgZXJyb3InLCBhc3luYyAoKSA9PiB7XG4gICAgY29uc3QgdHJhbnNwb3J0ZXIgPSBjcmVhdGVUZXN0VHJhbnNwb3J0ZXIoKTtcbiAgICBjb25zdCBpZnJhbWUgPSBjcmVhdGVUZXN0SWZyYW1lKCk7XG4gICAgY29uc3QgcGF5bG9hZCA9IHF1ZXJ5QnVpbGRlcignVEVTVF9SRVFVRVNUJyBhcyBSZXF1ZXN0VHlwZSwgeyBtc2c6ICdIZXkhIEltIHRlc3QnIH0pO1xuICAgIGNvbnN0IHByb21pc2UgPSB0cmFuc3BvcnRlci5wb3N0KGlmcmFtZSwgcGF5bG9hZCk7XG4gICAgYXdhaXQgaWZyYW1lLmlzUmVhZHkoKTtcbiAgICB0cmFuc3BvcnRlci5vbihKU09OLnN0cmluZ2lmeSh7IGlkOiBwYXlsb2FkLmlkLCBwYXlsb2FkOiB7IGVycjogdHJ1ZSwgbXNnOiAnV2hhdCEgRXJyb3InIH0gfSkpO1xuICAgIGF3YWl0IGV4cGVjdChwcm9taXNlKS5yZWplY3RzLnRvU3RyaWN0RXF1YWwoeyBpZDogcGF5bG9hZC5pZCwgcGF5bG9hZDogeyBlcnI6IHRydWUsIG1zZzogJ1doYXQhIEVycm9yJyB9IH0pO1xuICAgIGV4cGVjdCh0cmFuc3BvcnRlci5tZXNzYWdlSGFuZGxlcnMuZ2V0KHBheWxvYWQuaWQpKS50b0JlKHVuZGVmaW5lZCk7XG59KTtcbi8vXG5pdCAoJ0lnbm9yZSBtZXNzYWdlIGlmIGRpZmZlcmVuY2UgaWQnLCBhc3luYyAoKSA9PiB7XG4gICAgY29uc3QgdHJhbnNwb3J0ZXIgPSBjcmVhdGVUZXN0VHJhbnNwb3J0ZXIoKTtcbiAgICBjb25zdCBpZnJhbWUgPSBjcmVhdGVUZXN0SWZyYW1lKCk7XG4gICAgY29uc3QgcGF5bG9hZCA9IHF1ZXJ5QnVpbGRlcignVEVTVF9SRVFVRVNUJyBhcyBSZXF1ZXN0VHlwZSwgeyBtc2c6ICdIZXkhIEltIHRlc3QnIH0pO1xuICAgIHRyYW5zcG9ydGVyLnBvc3QoaWZyYW1lLCBwYXlsb2FkKTtcbiAgICBhd2FpdCBpZnJhbWUuaXNSZWFkeSgpO1xuICAgIHRyYW5zcG9ydGVyLm9uKEpTT04uc3RyaW5naWZ5KGNyZWF0ZVJlc3BvbnNlKCdhYmMnKSkpO1xuICAgIGV4cGVjdCh0cmFuc3BvcnRlci5tZXNzYWdlSGFuZGxlcnMua2V5cygpLm5leHQoKS52YWx1ZSkudG9FcXVhbChwYXlsb2FkLmlkKTtcbiAgICBleHBlY3QodHJhbnNwb3J0ZXIubWVzc2FnZUhhbmRsZXJzLnZhbHVlcygpLm5leHQoKS52YWx1ZS5fdmFsdWUpLnRvRXF1YWwoJycpO1xufSk7XG5cbml0ICgnV2lsbCByZWNlaXZlIG1lc3NhZ2UnLCBhc3luYyAoKSA9PiB7XG4gICAgY29uc3QgdHJhbnNwb3J0ZXIgPSBjcmVhdGVUZXN0VHJhbnNwb3J0ZXIoKTtcbiAgICBjb25zdCBpZnJhbWUgPSBjcmVhdGVUZXN0SWZyYW1lKCk7XG4gICAgY29uc3QgcGF5bG9hZCA9IHF1ZXJ5QnVpbGRlcignVEVTVF9SRVFVRVNUJyBhcyBSZXF1ZXN0VHlwZSwgeyBtc2c6ICdIZXkhIEltIHRlc3QnIH0pO1xuICAgIGNvbnN0IHByb21pc2UgPSB0cmFuc3BvcnRlci5wb3N0KGlmcmFtZSwgcGF5bG9hZCk7XG4gICAgYXdhaXQgaWZyYW1lLmlzUmVhZHkoKTtcbiAgICB0cmFuc3BvcnRlci5vbihKU09OLnN0cmluZ2lmeShjcmVhdGVSZXNwb25zZShwYXlsb2FkLmlkKSkpO1xuICAgIGF3YWl0IGV4cGVjdChwcm9taXNlKS5yZXNvbHZlcy50b1N0cmljdEVxdWFsKGNyZWF0ZVJlc3BvbnNlKHBheWxvYWQuaWQpKTtcbiAgICBleHBlY3QodHJhbnNwb3J0ZXIubWVzc2FnZUhhbmRsZXJzLmdldChwYXlsb2FkLmlkKSkudG9CZSh1bmRlZmluZWQpO1xufSk7XG4iXX0=

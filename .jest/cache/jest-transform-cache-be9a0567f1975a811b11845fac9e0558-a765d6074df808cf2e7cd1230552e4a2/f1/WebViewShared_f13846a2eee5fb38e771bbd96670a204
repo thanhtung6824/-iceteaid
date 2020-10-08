@@ -1,0 +1,59 @@
+9c2074e8015075689d3f8d4c4ee088f0
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.defaultRenderError = exports.defaultRenderLoading = exports.createOnShouldStartLoadWithRequest = exports.defaultOriginWhitelist = void 0;
+
+
+
+
+
+
+var _escapeStringRegexp = _interopRequireDefault(require("escape-string-regexp"));
+var _react = _interopRequireDefault(require("react"));
+var _reactNative = require("react-native");
+var _WebView = _interopRequireDefault(require("./WebView.styles"));var _jsxFileName = "/home/admin1/Desktop/@iceteaid/node_modules/react-native-webview/lib/WebViewShared.js";function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var __spreadArrays = this && this.__spreadArrays || function () {for (var s = 0, i = 0, il = arguments.length; i < il; i++) {s += arguments[i].length;}for (var r = Array(s), k = 0, i = 0; i < il; i++) {for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {r[k] = a[j];}}return r;};
+var defaultOriginWhitelist = ['http://*', 'https://*'];exports.defaultOriginWhitelist = defaultOriginWhitelist;
+var extractOrigin = function extractOrigin(url) {
+  var result = /^[A-Za-z][A-Za-z0-9+\-.]+:(\/\/)?[^/]*/.exec(url);
+  return result === null ? '' : result[0];
+};
+var originWhitelistToRegex = function originWhitelistToRegex(originWhitelist) {
+  return "^" + (0, _escapeStringRegexp.default)(originWhitelist).replace(/\\\*/g, '.*');
+};
+var passesWhitelist = function passesWhitelist(compiledWhitelist, url) {
+  var origin = extractOrigin(url);
+  return compiledWhitelist.some(function (x) {return new RegExp(x).test(origin);});
+};
+var compileWhitelist = function compileWhitelist(originWhitelist) {
+  return __spreadArrays(['about:blank'], originWhitelist || []).map(originWhitelistToRegex);
+};
+var createOnShouldStartLoadWithRequest = function createOnShouldStartLoadWithRequest(loadRequest, originWhitelist, onShouldStartLoadWithRequest) {
+  return function (_a) {
+    var nativeEvent = _a.nativeEvent;
+    var shouldStart = true;
+    var url = nativeEvent.url,lockIdentifier = nativeEvent.lockIdentifier;
+    if (!passesWhitelist(compileWhitelist(originWhitelist), url)) {
+      _reactNative.Linking.canOpenURL(url).then(function (supported) {
+        if (supported) {
+          return _reactNative.Linking.openURL(url);
+        }
+        console.warn("Can't open url: " + url);
+        return undefined;
+      })["catch"](function (e) {
+        console.warn('Error opening URL: ', e);
+      });
+      shouldStart = false;
+    } else
+    if (onShouldStartLoadWithRequest) {
+      shouldStart = onShouldStartLoadWithRequest(nativeEvent);
+    }
+    loadRequest(shouldStart, url, lockIdentifier);
+  };
+};exports.createOnShouldStartLoadWithRequest = createOnShouldStartLoadWithRequest;
+var defaultRenderLoading = function defaultRenderLoading() {return _react.default.createElement(_reactNative.View, { style: _WebView.default.loadingOrErrorView, __self: this, __source: { fileName: _jsxFileName, lineNumber: 50, columnNumber: 50 } },
+  _react.default.createElement(_reactNative.ActivityIndicator, { __self: this, __source: { fileName: _jsxFileName, lineNumber: 51, columnNumber: 5 } }));
+};exports.defaultRenderLoading = defaultRenderLoading;
+var defaultRenderError = function defaultRenderError(errorDomain, errorCode, errorDesc) {return _react.default.createElement(_reactNative.View, { style: _WebView.default.loadingOrErrorView, __self: this, __source: { fileName: _jsxFileName, lineNumber: 53, columnNumber: 81 } },
+  _react.default.createElement(_reactNative.Text, { style: _WebView.default.errorTextTitle, __self: this, __source: { fileName: _jsxFileName, lineNumber: 54, columnNumber: 5 } }, "Error loading page"),
+  _react.default.createElement(_reactNative.Text, { style: _WebView.default.errorText, __self: this, __source: { fileName: _jsxFileName, lineNumber: 55, columnNumber: 5 } }, "Domain: " + errorDomain),
+  _react.default.createElement(_reactNative.Text, { style: _WebView.default.errorText, __self: this, __source: { fileName: _jsxFileName, lineNumber: 56, columnNumber: 5 } }, "Error Code: " + errorCode),
+  _react.default.createElement(_reactNative.Text, { style: _WebView.default.errorText, __self: this, __source: { fileName: _jsxFileName, lineNumber: 57, columnNumber: 5 } }, "Description: " + errorDesc));
+};exports.defaultRenderError = defaultRenderError;

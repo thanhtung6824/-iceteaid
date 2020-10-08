@@ -9,13 +9,12 @@ export function randomId (): string {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10);
 }
 
-export function queryBuilder(idMessage: string, requestType: RequestType, payload: Record<string, any>) : string {
-    return JSON.stringify({ payload, id: idMessage, requestType  });
+export function queryBuilder(requestType: RequestType, payload: Record<string, any>) : any {
+    return { payload, id: randomId(), requestType  };
 }
 
-export function subjectBuilder(messageHandler: Map<string, Subject<any>>): {id: string, subject: BehaviorSubject<any>} {
-    const id = randomId();
+export function subjectBuilder(id: string, messageHandler: Map<string, Subject<any>>): BehaviorSubject<any> {
     const subject = new BehaviorSubject<any>('');
     messageHandler.set(id, subject);
-    return { id, subject };
+    return subject;
 }

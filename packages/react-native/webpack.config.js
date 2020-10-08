@@ -17,18 +17,6 @@ module.exports = {
                 use: [
                     {
                         loader: 'ts-loader',
-                        // options: {
-                        //     presets: [
-                        //         '@babel/preset-env',
-                        //         "@babel/preset-typescript",
-                        //         "module:metro-react-native-babel-preset",
-                        //     ],
-                        //     plugins: [
-                        //         "@babel/proposal-class-properties",
-                        //         "@babel/proposal-object-rest-spread",
-                        //         "@babel/plugin-transform-modules-commonjs"
-                        //     ]
-                        // }
                     },
                 ]
             },

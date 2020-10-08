@@ -1,0 +1,18 @@
+d0cbcbebcade5fe0ec5510cc20e56110
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * @jest-environment jsdom
+ */
+
+var src_1 = require("../../src");
+
+it('To be instance of Error', function () {
+  var testException = new src_1.ExceptionHandler('123', '345');
+  expect(testException).toBeInstanceOf(Error);
+  expect(testException.message).toBe('IceteaID Error: [123] 345');
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2FkbWluMS9EZXNrdG9wL0BpY2V0ZWFpZC9wYWNrYWdlcy9jb3JlL3Rlc3QvcHJvdmlkZXIvZXhjZXB0aW9uLWhhbmRsZXIudGVzdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBOzs7O0FBR0EsSUFBQSxLQUFBLEdBQUEsT0FBQSxDQUFBLFdBQUEsQ0FBQTs7QUFHQSxFQUFFLENBQUUseUJBQUYsRUFBNkIsWUFBQTtBQUMzQixNQUFNLGFBQWEsR0FBRyxJQUFJLEtBQUEsQ0FBQSxnQkFBSixDQUFxQixLQUFyQixFQUE2QyxLQUE3QyxDQUF0QjtBQUNBLEVBQUEsTUFBTSxDQUFDLGFBQUQsQ0FBTixDQUFzQixjQUF0QixDQUFxQyxLQUFyQztBQUNBLEVBQUEsTUFBTSxDQUFDLGFBQWEsQ0FBQyxPQUFmLENBQU4sQ0FBOEIsSUFBOUIsQ0FBbUMsMkJBQW5DO0FBQ0gsQ0FKQyxDQUFGIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBAamVzdC1lbnZpcm9ubWVudCBqc2RvbVxuICovXG5pbXBvcnQgeyBFeGNlcHRpb25IYW5kbGVyIH0gZnJvbSAnLi4vLi4vc3JjJztcbmltcG9ydCB7IEV4Y2VwdGlvblR5cGUgfSBmcm9tICdpY2V0ZWFpZC10eXBlJztcblxuaXQgKCdUbyBiZSBpbnN0YW5jZSBvZiBFcnJvcicsICgpID0+IHtcbiAgICBjb25zdCB0ZXN0RXhjZXB0aW9uID0gbmV3IEV4Y2VwdGlvbkhhbmRsZXIoJzEyMycgYXMgRXhjZXB0aW9uVHlwZSwgJzM0NScpO1xuICAgIGV4cGVjdCh0ZXN0RXhjZXB0aW9uKS50b0JlSW5zdGFuY2VPZihFcnJvcik7XG4gICAgZXhwZWN0KHRlc3RFeGNlcHRpb24ubWVzc2FnZSkudG9CZSgnSWNldGVhSUQgRXJyb3I6IFsxMjNdIDM0NScpO1xufSk7Il19

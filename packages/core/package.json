@@ -1,13 +1,13 @@
 {
   "name": "iceteaid-core",
-  "version": "0.0.45-alpha.0",
+  "version": "0.0.54-alpha.0",
   "description": "provide share common code logic between modules",
   "author": "Tung",
   "homepage": "",
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
-    "iceteaid-type": "^0.0.20-alpha.0",
+    "iceteaid-type": "^0.0.23-alpha.0",
     "rxjs": "7.0.0-beta.5"
   },
   "gitHead": "dec33862b3de41144e698acf4736f23726bfb959",
@@ -16,7 +16,10 @@
     "@babel/preset-typescript": "^7.10.4",
     "@types/jest": "^26.0.14",
     "@types/whatwg-url": "^8.0.0",
-    "jest": "^26.4.2",
-    "sinon": "^9.0.3"
+    "browser-env": "^3.3.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "import-fresh": "^3.2.1",
+    "jest": "^26.4.2"
   }
 }

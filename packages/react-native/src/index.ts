@@ -6,8 +6,8 @@ import { Buffer } from 'buffer';
 import { URL, URLSearchParams } from 'whatwg-url';
 
 global.Buffer = Buffer;
-global.URL = URL as any;
-global.URLSearchParams = URLSearchParams as any;
+(global as any).URL = URL;
+(global as any).URLSearchParams = URLSearchParams;
 global.btoa = (str) => Buffer.from(str, 'binary').toString('base64');
 global.atob = (b64Encoded) => Buffer.from(b64Encoded, 'base64').toString('binary');
 

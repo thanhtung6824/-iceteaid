@@ -43,7 +43,7 @@ export class SdkBase {
         if (!SdkBase._transport.has(this.sdkId)) {
             SdkBase._transport.set(
                 this.sdkId,
-                new SdkConfiguration.Transporter(this.endpoint, this.iframe)
+                new SdkConfiguration.Transporter(this.endpoint)
             );
         }
         return <Transporter>SdkBase._transport.get(this.sdkId);
@@ -53,7 +53,7 @@ export class SdkBase {
         if (!SdkBase._iframe.has(this.sdkId)) {
             SdkBase._iframe.set(
                 this.sdkId,
-                new SdkConfiguration.Iframe(this.endpoint, this.sdkId)
+                new SdkConfiguration.Iframe(this.endpoint, this.sdkId, this.transporter)
             );
         }
         return <Iframe>SdkBase._iframe.get(this.sdkId);

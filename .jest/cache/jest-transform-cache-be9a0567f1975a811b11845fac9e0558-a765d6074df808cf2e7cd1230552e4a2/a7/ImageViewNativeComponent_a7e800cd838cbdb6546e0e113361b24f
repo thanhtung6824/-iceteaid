@@ -1,0 +1,57 @@
+b0bb5553a788761bb1c645c31031810d
+
+
+
+
+
+
+
+
+
+
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+var _ImageViewViewConfig = _interopRequireDefault(require("./ImageViewViewConfig"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var ImageViewNativeComponent;
+if (global.RN$Bridgeless) {
+  require('../Renderer/shims/ReactNativeViewConfigRegistry').register('RCTImageView', function () {
+    return _ImageViewViewConfig.default;
+  });
+  ImageViewNativeComponent = 'RCTImageView';
+} else {
+  ImageViewNativeComponent = require('../ReactNative/requireNativeComponent')(
+  'RCTImageView');
+
+}var _default =
+
+
+ImageViewNativeComponent;exports.default = _default;

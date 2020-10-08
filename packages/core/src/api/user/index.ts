@@ -1,45 +1,55 @@
 import { BaseApi } from '../base-api';
 import { RequestType, ReturnType } from 'iceteaid-type';
-import { missingParameter } from '../..';
+import { missingParameter, queryBuilder } from '../..';
 
 export class UserApi extends BaseApi {
     public generateEncryptionKey(): ReturnType<any> {
-        return this.transporter.post(RequestType.GENERATE_ENCRYPTION_KEY, {});
+        const payload = queryBuilder(RequestType.GENERATE_ENCRYPTION_KEY, {});
+        return this.transporter.post(this.iframe, payload);
     }
 
-    public encryptKey(privateKey: string, encryptionKey: string): ReturnType<any> {
+    public encryptKey(privateKey: string, encryptionKey: string, mnemonic?: string): ReturnType<any> {
         if (!privateKey) {
-            return missingParameter('PRIVATE_KEY');
+            throw missingParameter('PRIVATE_KEY');
         }
         if (!encryptionKey) {
-            return missingParameter('ENCRYPTION_KEY');
+            throw missingParameter('ENCRYPTION_KEY');
         }
-        return this.transporter.post(RequestType.ENCRYPT_KEY, { privateKey, encryptionKey });
+        const payload = queryBuilder(RequestType.ENCRYPT_KEY, { privateKey, encryptionKey, mnemonic: mnemonic || '' });
+        return this.transporter.post(this.iframe, payload);
     }
 
-    public decryptKey(privateKey: string, encryptionKey: string): ReturnType<any> {
+    public decryptKey(privateKey: string, encryptionKey: string, mnemonic?: string): ReturnType<any> {
         if (!privateKey) {
-            return missingParameter('PRIVATE_KEY');
+            throw missingParameter('PRIVATE_KEY');
         }
         if (!encryptionKey) {
-            return missingParameter('ENCRYPTION_KEY');
+            throw missingParameter('ENCRYPTION_KEY');
         }
-        return this.transporter.post(RequestType.DECRYPT_KEY, { privateKey, encryptionKey });
+        const payload = queryBuilder(RequestType.DECRYPT_KEY, { privateKey, encryptionKey, mnemonic: mnemonic || '' });
+        return this.transporter.post(this.iframe, payload);
     }
 
     public getKey(): ReturnType<any> {
-        return this.transporter.post(RequestType.GET_KEY, {});
+        const payload = queryBuilder(RequestType.GET_KEY, {});
+        return this.transporter.post(this.iframe, payload);
     }
 
-    public updateInfo(displayName: string, fullName: string): ReturnType<any> {
-        return this.transporter.post(RequestType.UPDATE_INFO, { displayName, fullName });
+    public updateInfo(displayName?: string, fullName?: string): ReturnType<any> {
+        if (!displayName && !fullName) {
+            throw missingParameter('AT_LEAST_ONE_PARAMETER');
+        }
+        const payload = queryBuilder(RequestType.UPDATE_INFO, { displayName, fullName });
+        return this.transporter.post(this.iframe, payload);
     }
 
     public getMetaData(): ReturnType<any> {
-        return this.transporter.post(RequestType.GET_META_DATA, {});
+        const payload = queryBuilder(RequestType.GET_META_DATA, {});
+        return this.transporter.post(this.iframe, payload);
     }
 
     public getDataAfterRedirect(): ReturnType<any> {
-        return this.transporter.post(RequestType.WEB_GET_DATA_AFTER_REDIRECT, {});
+        const payload = queryBuilder(RequestType.WEB_GET_DATA_AFTER_REDIRECT, {});
+        return this.transporter.post(this.iframe, payload);
     }
 }

@@ -1,0 +1,41 @@
+cc7716a8f835e77be6187268f97ba194
+
+
+
+
+
+
+
+
+
+
+'use strict';
+
+
+
+var ImageURISourcePropType = require('prop-types').shape({
+  uri: require('prop-types').string,
+  bundle: require('prop-types').string,
+  method: require('prop-types').string,
+  headers: require('prop-types').objectOf(require('prop-types').string),
+  body: require('prop-types').string,
+  cache: require('prop-types').oneOf([
+  'default',
+  'reload',
+  'force-cache',
+  'only-if-cached']),
+
+  width: require('prop-types').number,
+  height: require('prop-types').number,
+  scale: require('prop-types').number });
+
+
+var ImageSourcePropType = require('prop-types').oneOfType([
+ImageURISourcePropType,
+
+require('prop-types').number,
+
+require('prop-types').arrayOf(ImageURISourcePropType)]);
+
+
+module.exports = ImageSourcePropType;

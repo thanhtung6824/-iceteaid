@@ -1,0 +1,10 @@
+a1bfbe6b5fcd7f126d40bee5af0a4004
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.BASE_URL = exports.TEST_SDK_ID = void 0;
+exports.TEST_SDK_ID = 'abcxyzqwert';
+exports.BASE_URL = 'http://3k.theydont.work';
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2FkbWluMS9EZXNrdG9wL0BpY2V0ZWFpZC9wYWNrYWdlcy9jb3JlL3Rlc3QvY29uc3RhbnRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7OztBQUFhLE9BQUEsQ0FBQSxXQUFBLEdBQWMsYUFBZDtBQUNBLE9BQUEsQ0FBQSxRQUFBLEdBQVcseUJBQVgiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgY29uc3QgVEVTVF9TREtfSUQgPSAnYWJjeHl6cXdlcnQnO1xuZXhwb3J0IGNvbnN0IEJBU0VfVVJMID0gJ2h0dHA6Ly8zay50aGV5ZG9udC53b3JrJzsiXX0=

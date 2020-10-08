@@ -1,0 +1,1 @@
+{"version":3,"sources":["/home/admin1/Desktop/@iceteaid/packages/react-native/test/constants.ts"],"names":[],"mappings":";;;;;;AAAa,OAAA,CAAA,WAAA,GAAc,aAAd;AACA,OAAA,CAAA,QAAA,GAAW,yBAAX","sourcesContent":["export const TEST_SDK_ID = 'abcxyzqwert';\nexport const BASE_URL = 'http://3k.theydont.work';"]}

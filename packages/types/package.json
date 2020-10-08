@@ -1,6 +1,6 @@
 {
   "name": "iceteaid-type",
-  "version": "0.0.20-alpha.0",
+  "version": "0.0.23-alpha.0",
   "description": "> TODO: description",
   "author": "Tung <thanhtung6824@gmail.com>",
   "homepage": "",
@@ -15,7 +15,9 @@
     "@babel/preset-typescript": "^7.10.4",
     "@types/jest": "^26.0.14",
     "@types/whatwg-url": "^8.0.0",
-    "jest": "^26.4.2",
-    "sinon": "^9.0.3"
+    "browser-env": "^3.3.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "import-fresh": "^3.2.1"
   }
 }

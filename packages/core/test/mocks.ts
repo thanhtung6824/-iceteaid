@@ -1,29 +1,41 @@
 import { Iframe, Transporter } from '../src';
 import { Subject } from 'rxjs';
-import sinon from 'sinon';
-import { TEST_SDK_ID, BASE_URL } from './constants';
+import { BASE_URL } from './constants';
 import { sdkBuilder } from '../src';
 import { SdkBase } from '../src';
+import { BaseApi } from '../src/api/base-api';
 
 export class TestIframe extends Iframe {
-    public messageHandler: Map<string, Subject<any>> = new Map();
-    protected bootstrap = sinon.stub();
-    protected closeIframe = sinon.stub();
-    protected openIframe = sinon.stub();
-    public isReady = sinon.stub();
-    public postMessage = sinon.stub();
+    public bootstrap = jest.fn();
+    protected closeIframe = jest.fn();
+    protected openIframe = jest.fn();
+    public isReady = jest.fn(() => Promise.resolve());
+    public postMessage = jest.fn();
 }
 
 export class TestTransporter extends Transporter {
-    protected bootstrap(): void {
-        console.log('bootstrap test transporter');
-    }
-
-    public post = sinon.stub();
+    public messageHandlers: Map<string, Subject<any>> = new Map();
+    protected bootstrap = jest.fn()
 }
 
+export class TestApi extends BaseApi {
+    
+}
+
+export const createTestTransporter = (): TestTransporter => {
+    return new TestTransporter(BASE_URL);
+};
+
+export const createTestIframe = (): TestIframe => {
+    return new TestIframe(BASE_URL, 'xxx', createTestTransporter());
+};
+
+export const createTestApi = (): TestApi => {
+    return new TestApi(new TestSdk('xxx'));
+};
+
 export const TestSdk = sdkBuilder(SdkBase, {
-    target: 'react-native',
+    target: 'web',
     Iframe: TestIframe,
     Transporter: TestTransporter,
     baseUrl: BASE_URL,

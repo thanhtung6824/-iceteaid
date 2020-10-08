@@ -1,0 +1,153 @@
+bd7606065d088b76d148c650e40b23f2
+
+
+
+
+
+
+
+
+
+
+'use strict';var _this = this,_jsxFileName = "/home/admin1/Desktop/@iceteaid/node_modules/react-native/Libraries/Components/ActivityIndicator/ActivityIndicator.js";function _extends() {_extends = Object.assign || function (target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i];for (var key in source) {if (Object.prototype.hasOwnProperty.call(source, key)) {target[key] = source[key];}}}return target;};return _extends.apply(this, arguments);}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _objectWithoutProperties(source, excluded) {if (source == null) return {};var target = _objectWithoutPropertiesLoose(source, excluded);var key, i;if (Object.getOwnPropertySymbols) {var sourceSymbolKeys = Object.getOwnPropertySymbols(source);for (i = 0; i < sourceSymbolKeys.length; i++) {key = sourceSymbolKeys[i];if (excluded.indexOf(key) >= 0) continue;if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;target[key] = source[key];}}return target;}function _objectWithoutPropertiesLoose(source, excluded) {if (source == null) return {};var target = {};var sourceKeys = Object.keys(source);var key, i;for (i = 0; i < sourceKeys.length; i++) {key = sourceKeys[i];if (excluded.indexOf(key) >= 0) continue;target[key] = source[key];}return target;}
+
+
+
+
+
+
+
+
+
+var PlatformActivityIndicator =
+require('../../Utilities/Platform').OS === 'android' ?
+require('../ProgressBarAndroid/ProgressBarAndroid') :
+require('./ActivityIndicatorViewNativeComponent').default;
+
+var GRAY = '#999999';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var ActivityIndicator = function ActivityIndicator(props, forwardedRef) {var
+  onLayout = props.onLayout,style = props.style,size = props.size,restProps = _objectWithoutProperties(props, ["onLayout", "style", "size"]);
+  var sizeStyle;
+  var sizeProp;
+
+  switch (size) {
+    case 'small':
+      sizeStyle = styles.sizeSmall;
+      sizeProp = 'small';
+      break;
+    case 'large':
+      sizeStyle = styles.sizeLarge;
+      sizeProp = 'large';
+      break;
+    default:
+      sizeStyle = { height: props.size, width: props.size };
+      break;}
+
+
+  var nativeProps = _objectSpread(_objectSpread({},
+  restProps), {}, {
+    ref: forwardedRef,
+    style: sizeStyle,
+    size: sizeProp });
+
+
+  var androidProps = {
+    styleAttr: 'Normal',
+    indeterminate: true };
+
+
+  return (
+    require('react').createElement(require('../View/View'), {
+      onLayout: onLayout,
+      style: require('../../StyleSheet/StyleSheet').compose(
+      styles.container,
+      style), __self: _this, __source: { fileName: _jsxFileName, lineNumber: 102, columnNumber: 5 } },
+
+    require('../../Utilities/Platform').OS === 'android' ?
+
+    require('react').createElement(PlatformActivityIndicator, _extends({}, nativeProps, androidProps, { __self: _this, __source: { fileName: _jsxFileName, lineNumber: 110, columnNumber: 9 } })) :
+
+
+
+
+    require('react').createElement(PlatformActivityIndicator, _extends({}, nativeProps, { __self: _this, __source: { fileName: _jsxFileName, lineNumber: 115, columnNumber: 9 } }))));
+
+
+
+};
+
+var ActivityIndicatorWithRef =
+
+
+require('react').forwardRef(ActivityIndicator);
+ActivityIndicatorWithRef.displayName = 'ActivityIndicator';
+
+
+
+
+ActivityIndicatorWithRef.defaultProps = {
+  animating: true,
+  color: require('../../Utilities/Platform').OS === 'ios' ? GRAY : null,
+  hidesWhenStopped: true,
+  size: 'small' };
+
+
+var styles = require('../../StyleSheet/StyleSheet').create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center' },
+
+  sizeSmall: {
+    width: 20,
+    height: 20 },
+
+  sizeLarge: {
+    width: 36,
+    height: 36 } });
+
+
+
+module.exports = ActivityIndicatorWithRef;

@@ -1,0 +1,76 @@
+453e4889e6ed7a6a7e052743576a4dad
+"use strict";
+
+var __extends = void 0 && (void 0).__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.viewIsNotReady = exports.invalidParameter = exports.missingParameter = exports.missingApiKeyError = exports.ExceptionHandler = void 0;
+
+var iceteaid_type_1 = require("iceteaid-type");
+
+var ExceptionHandler =
+/** @class */
+function (_super) {
+  __extends(ExceptionHandler, _super);
+
+  function ExceptionHandler(code, message) {
+    var _this = _super.call(this, "IceteaID Error: [" + code + "] " + message) || this; // Set the prototype explicitly.
+
+
+    Object.setPrototypeOf(_this, ExceptionHandler.prototype);
+    return _this;
+  }
+
+  return ExceptionHandler;
+}(Error);
+
+exports.ExceptionHandler = ExceptionHandler;
+
+function missingApiKeyError() {
+  return new ExceptionHandler(iceteaid_type_1.ExceptionType.MISSING_API_KEY, 'You must provide a api key');
+}
+
+exports.missingApiKeyError = missingApiKeyError;
+
+function missingParameter(param) {
+  return new ExceptionHandler(iceteaid_type_1.ExceptionType.MISSING_PARAMETER, "Parameter " + param + " is required");
+}
+
+exports.missingParameter = missingParameter;
+
+function invalidParameter(param) {
+  return new ExceptionHandler(iceteaid_type_1.ExceptionType.INVALID_PARAMETER, "Parameter " + param + " is invalid");
+}
+
+exports.invalidParameter = invalidParameter;
+
+function viewIsNotReady() {
+  return new ExceptionHandler(iceteaid_type_1.ExceptionType.VIEW_NOT_READY, 'View is not ready');
+}
+
+exports.viewIsNotReady = viewIsNotReady;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL2FkbWluMS9EZXNrdG9wL0BpY2V0ZWFpZC9wYWNrYWdlcy9jb3JlL3NyYy9wcm92aWRlci9leGNlcHRpb24taGFuZGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsSUFBQSxlQUFBLEdBQUEsT0FBQSxDQUFBLGVBQUEsQ0FBQTs7QUFFQSxJQUFBLGdCQUFBO0FBQUE7QUFBQSxVQUFBLE1BQUEsRUFBQTtBQUFzQyxFQUFBLFNBQUEsQ0FBQSxnQkFBQSxFQUFBLE1BQUEsQ0FBQTs7QUFDbEMsV0FBQSxnQkFBQSxDQUFZLElBQVosRUFBaUMsT0FBakMsRUFBZ0Q7QUFBaEQsUUFBQSxLQUFBLEdBRUksTUFBQSxDQUFBLElBQUEsQ0FBQSxJQUFBLEVBQU8sc0JBQW9CLElBQXBCLEdBQXdCLElBQXhCLEdBQTZCLE9BQXBDLEtBQThDLElBRmxELENBQWdELENBSTVDOzs7QUFDQSxJQUFBLE1BQU0sQ0FBQyxjQUFQLENBQXNCLEtBQXRCLEVBQTRCLGdCQUFnQixDQUFDLFNBQTdDOztBQUNIOztBQUNMLFNBQUEsZ0JBQUE7QUFBQyxDQVJELENBQXNDLEtBQXRDLENBQUE7O0FBQWEsT0FBQSxDQUFBLGdCQUFBLEdBQUEsZ0JBQUE7O0FBVWIsU0FBZ0Isa0JBQWhCLEdBQWtDO0FBQzlCLFNBQU8sSUFBSSxnQkFBSixDQUNILGVBQUEsQ0FBQSxhQUFBLENBQWMsZUFEWCxFQUVILDRCQUZHLENBQVA7QUFJSDs7QUFMRCxPQUFBLENBQUEsa0JBQUEsR0FBQSxrQkFBQTs7QUFPQSxTQUFnQixnQkFBaEIsQ0FBaUMsS0FBakMsRUFBOEM7QUFDMUMsU0FBTyxJQUFJLGdCQUFKLENBQ0gsZUFBQSxDQUFBLGFBQUEsQ0FBYyxpQkFEWCxFQUVILGVBQWEsS0FBYixHQUFrQixjQUZmLENBQVA7QUFJSDs7QUFMRCxPQUFBLENBQUEsZ0JBQUEsR0FBQSxnQkFBQTs7QUFPQSxTQUFnQixnQkFBaEIsQ0FBaUMsS0FBakMsRUFBOEM7QUFDMUMsU0FBTyxJQUFJLGdCQUFKLENBQ0gsZUFBQSxDQUFBLGFBQUEsQ0FBYyxpQkFEWCxFQUVILGVBQWEsS0FBYixHQUFrQixhQUZmLENBQVA7QUFJSDs7QUFMRCxPQUFBLENBQUEsZ0JBQUEsR0FBQSxnQkFBQTs7QUFPQSxTQUFnQixjQUFoQixHQUE4QjtBQUMxQixTQUFPLElBQUksZ0JBQUosQ0FDSCxlQUFBLENBQUEsYUFBQSxDQUFjLGNBRFgsRUFFSCxtQkFGRyxDQUFQO0FBSUg7O0FBTEQsT0FBQSxDQUFBLGNBQUEsR0FBQSxjQUFBIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgRXhjZXB0aW9uVHlwZSB9IGZyb20gJ2ljZXRlYWlkLXR5cGUnO1xuXG5leHBvcnQgY2xhc3MgRXhjZXB0aW9uSGFuZGxlciBleHRlbmRzIEVycm9yIHtcbiAgICBjb25zdHJ1Y3Rvcihjb2RlOiBFeGNlcHRpb25UeXBlLCBtZXNzYWdlOiBzdHJpbmcpIHtcblxuICAgICAgICBzdXBlciAoYEljZXRlYUlEIEVycm9yOiBbJHtjb2RlfV0gJHttZXNzYWdlfWApO1xuXG4gICAgICAgIC8vIFNldCB0aGUgcHJvdG90eXBlIGV4cGxpY2l0bHkuXG4gICAgICAgIE9iamVjdC5zZXRQcm90b3R5cGVPZih0aGlzLCBFeGNlcHRpb25IYW5kbGVyLnByb3RvdHlwZSk7XG4gICAgfVxufVxuXG5leHBvcnQgZnVuY3Rpb24gbWlzc2luZ0FwaUtleUVycm9yKCk6IEV4Y2VwdGlvbkhhbmRsZXIge1xuICAgIHJldHVybiBuZXcgRXhjZXB0aW9uSGFuZGxlcihcbiAgICAgICAgRXhjZXB0aW9uVHlwZS5NSVNTSU5HX0FQSV9LRVksXG4gICAgICAgICdZb3UgbXVzdCBwcm92aWRlIGEgYXBpIGtleSdcbiAgICApO1xufVxuXG5leHBvcnQgZnVuY3Rpb24gbWlzc2luZ1BhcmFtZXRlcihwYXJhbTogc3RyaW5nKTogRXhjZXB0aW9uSGFuZGxlciB7XG4gICAgcmV0dXJuIG5ldyBFeGNlcHRpb25IYW5kbGVyKFxuICAgICAgICBFeGNlcHRpb25UeXBlLk1JU1NJTkdfUEFSQU1FVEVSLFxuICAgICAgICBgUGFyYW1ldGVyICR7cGFyYW19IGlzIHJlcXVpcmVkYFxuICAgICk7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiBpbnZhbGlkUGFyYW1ldGVyKHBhcmFtOiBzdHJpbmcpOiBFeGNlcHRpb25IYW5kbGVyIHtcbiAgICByZXR1cm4gbmV3IEV4Y2VwdGlvbkhhbmRsZXIoXG4gICAgICAgIEV4Y2VwdGlvblR5cGUuSU5WQUxJRF9QQVJBTUVURVIsXG4gICAgICAgIGBQYXJhbWV0ZXIgJHtwYXJhbX0gaXMgaW52YWxpZGBcbiAgICApO1xufVxuXG5leHBvcnQgZnVuY3Rpb24gdmlld0lzTm90UmVhZHkoKTogRXhjZXB0aW9uSGFuZGxlciB7XG4gICAgcmV0dXJuIG5ldyBFeGNlcHRpb25IYW5kbGVyKFxuICAgICAgICBFeGNlcHRpb25UeXBlLlZJRVdfTk9UX1JFQURZLFxuICAgICAgICAnVmlldyBpcyBub3QgcmVhZHknXG4gICAgKTtcbn0iXX0=

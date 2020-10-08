@@ -1,63 +1,57 @@
-import {TestIframe, TestTransporter} from "../mocks";
-import {Iframe, randomId, subjectBuilder, Transporter} from "../../src";
-import {BASE_URL} from '../constants';
-import sinon from 'sinon';
-import {lastValueFrom, throwError} from "rxjs";
-import {filter, map, take, tap} from "rxjs/operators";
-import {RequestType} from "iceteaid-type";
+/**
+ * @jest-environment jsdom
+ */
 
-test ('Initialize Transporter', () => {
-    const transporter = new (Transporter as any)(BASE_URL, new (Iframe as any)(BASE_URL, 'abc'));
-    expect(transporter).toBeInstanceOf(Transporter);
-    expect(transporter.post).toBeDefined();
+import { createTestIframe, createTestTransporter } from '../mocks';
+import { queryBuilder } from '../../src';
+import { RequestType } from 'iceteaid-type';
+
+const createResponse = (id: string) => {
+    return {
+        id,
+        payload: { err: false, msg: 'Im a response' }
+    };
+};
+
+it ('Will post message', async () => {
+    const transporter = createTestTransporter();
+    const iframe = createTestIframe();
+    const payload = queryBuilder('TEST_REQUEST' as RequestType, { msg: 'Hey! Im test' });
+    transporter.post(iframe, payload);
+    await iframe.isReady();
+
+    expect(iframe.postMessage).toBeCalledWith(JSON.stringify(payload));
 });
 
-function createResponse(id: string) {
-    return {id, payload: {err: false, message: 'Okay test'}}
-}
-
-function createResponseError(id: string) {
-    return {id, payload: {err: true, message: 'No! Not okay'}}
-}
-
-async function mockPostMethod (transporter: Transporter, request: Record<string, any>, response: Record<string, any>) {
-    const { subject } = subjectBuilder((transporter as any).iframe.messageHandler)
-
-    transporter.post = sinon.spy((requestType: RequestType, payload: Record<string, any>) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                subject.next(response)
-                resolve()
-            }, 1000)
-        })
-    });
-    transporter.post(request.requestType, request.payload)
-    return await lastValueFrom(subject.asObservable().pipe(
-        filter(message => !!message && message.id === request.id),
-        map(message => {
-            if (message.payload.err) return lastValueFrom(throwError(message));
-            return message;
-        }),
-        take(1),
-        tap(() => {
-            (transporter as any).iframe.messageHandler.delete(request.id);
-        })
-    ))
-}
-
-test('Logic post function', async () => {
-    const transporter = new TestTransporter(BASE_URL, new (TestIframe as any)(BASE_URL, 'abc'));
-    const id = randomId();
-    const testRequest = {id, requestType: 'TEST_REQUEST', payload: {message: 'Hi! Im test'}}
-    const expectedResponse = await mockPostMethod(transporter, testRequest, createResponse(id));
-    expect(expectedResponse).toStrictEqual(createResponse(id));
-    expect((transporter as any).iframe.messageHandler.get(id)).toBe(undefined);
+it ('Throw message if have error', async () => {
+    const transporter = createTestTransporter();
+    const iframe = createTestIframe();
+    const payload = queryBuilder('TEST_REQUEST' as RequestType, { msg: 'Hey! Im test' });
+    const promise = transporter.post(iframe, payload);
+    await iframe.isReady();
+    transporter.on(JSON.stringify({ id: payload.id, payload: { err: true, msg: 'What! Error' } }));
+    await expect(promise).rejects.toStrictEqual({ id: payload.id, payload: { err: true, msg: 'What! Error' } });
+    expect(transporter.messageHandlers.get(payload.id)).toBe(undefined);
+});
+//
+it ('Ignore message if difference id', async () => {
+    const transporter = createTestTransporter();
+    const iframe = createTestIframe();
+    const payload = queryBuilder('TEST_REQUEST' as RequestType, { msg: 'Hey! Im test' });
+    transporter.post(iframe, payload);
+    await iframe.isReady();
+    transporter.on(JSON.stringify(createResponse('abc')));
+    expect(transporter.messageHandlers.keys().next().value).toEqual(payload.id);
+    expect(transporter.messageHandlers.values().next().value._value).toEqual('');
 });
 
-test('Throw error when err is true', async () => {
-    const transporter = new TestTransporter(BASE_URL, new (TestIframe as any)(BASE_URL, 'abc'));
-    const id = randomId();
-    const testRequest = {id, requestType: 'TEST_REQUEST', payload: {message: 'Hi! Im test'}}
-    await expect(mockPostMethod(transporter, testRequest, createResponseError(id))).rejects.toStrictEqual(createResponseError(id));
-    expect((transporter as any).iframe.messageHandler.get(id)).toBe(undefined);
+it ('Will receive message', async () => {
+    const transporter = createTestTransporter();
+    const iframe = createTestIframe();
+    const payload = queryBuilder('TEST_REQUEST' as RequestType, { msg: 'Hey! Im test' });
+    const promise = transporter.post(iframe, payload);
+    await iframe.isReady();
+    transporter.on(JSON.stringify(createResponse(payload.id)));
+    await expect(promise).resolves.toStrictEqual(createResponse(payload.id));
+    expect(transporter.messageHandlers.get(payload.id)).toBe(undefined);
 });

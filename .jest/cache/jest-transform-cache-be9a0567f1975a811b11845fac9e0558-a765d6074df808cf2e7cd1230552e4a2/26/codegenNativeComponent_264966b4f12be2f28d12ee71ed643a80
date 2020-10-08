@@ -1,0 +1,64 @@
+9eb79c6b2da32cc5bcb514c59be992d3
+
+
+
+
+
+
+
+
+
+
+
+
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+var _requireNativeComponent = _interopRequireDefault(require("../../Libraries/ReactNative/requireNativeComponent"));
+
+var _UIManager = _interopRequireDefault(require("../ReactNative/UIManager"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
+
+
+
+
+
+
+
+
+
+function codegenNativeComponent(
+componentName,
+options)
+{
+  var componentNameInUse =
+  options && options.paperComponentName ?
+  options.paperComponentName :
+  componentName;
+
+  if (options != null && options.paperComponentNameDeprecated != null) {
+    if (_UIManager.default.getViewManagerConfig(componentName)) {
+      componentNameInUse = componentName;
+    } else if (
+    options.paperComponentNameDeprecated != null &&
+    _UIManager.default.getViewManagerConfig(options.paperComponentNameDeprecated))
+    {
+      componentNameInUse = options.paperComponentNameDeprecated;
+    } else {
+      throw new Error("Failed to find native component for either " +
+      componentName + " or " + (options.paperComponentNameDeprecated ||
+      '(unknown)'));
+
+    }
+  }
+
+
+
+
+
+  return (0, _requireNativeComponent.default)(
+  componentNameInUse);
+
+}var _default =
+
+codegenNativeComponent;exports.default = _default;

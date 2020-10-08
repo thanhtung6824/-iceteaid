@@ -1,41 +1,47 @@
-import {BaseApi} from '../base-api';
-import {invalidParameter, missingParameter, SdkConfiguration} from '../..';
-import {RequestType, ReturnType} from 'iceteaid-type';
+import { BaseApi } from '../base-api';
+import { invalidParameter, missingParameter, queryBuilder, SdkConfiguration } from '../..';
+import { RequestType, ReturnType } from 'iceteaid-type';
 
 export class AuthApi extends BaseApi {
     public sendOtp(emailOrPhone: string, channel: string): ReturnType<any> {
         if (!emailOrPhone) {
-            return missingParameter('EMAIL_OR_PHONE');
+            throw missingParameter('EMAIL_OR_PHONE');
         }
         if (!channel) {
-            return missingParameter('CHANNEL');
+            throw missingParameter('CHANNEL');
         }
-        return this.transporter.post(RequestType.SEND_OTP, { emailOrPhone, channel });
+        const payload = queryBuilder(RequestType.SEND_OTP, { emailOrPhone, channel });
+        return this.transporter.post(this.iframe, payload);
     }
 
     public verifyOtp(emailOrPhone: string, channel: string, verifyCode: string): ReturnType<any> {
         if (!emailOrPhone) {
-            return missingParameter('EMAIL_OR_PHONE');
+            throw missingParameter('EMAIL_OR_PHONE');
         }
         if (!channel) {
-            return missingParameter('CHANNEL');
+            throw missingParameter('CHANNEL');
         }
-
-        return this.transporter.post(RequestType.VERIFY_OTP, { emailOrPhone, channel, verifyCode });
+        const payload = queryBuilder(RequestType.VERIFY_OTP, { emailOrPhone, channel, verifyCode });
+        return this.transporter.post(this.iframe, payload);
     }
 
     public loginWithGoogle(redirectUri?: string): Promise<any>;
     public loginWithGoogle(redirectUri: string): ReturnType<any> | void {
         if (SdkConfiguration.target === 'react-native' && redirectUri) {
-            return invalidParameter('REDIRECT_URI');
+            throw invalidParameter('REDIRECT_URI');
+        }
+        if (SdkConfiguration.target === 'react-native' && !redirectUri) {
+            const payload = queryBuilder(RequestType.LOGIN_WITH_GOOGLE, {});
+            return this.transporter.post(this.iframe, payload);
         }
         if (!redirectUri) {
-            return this.transporter.post(RequestType.LOGIN_WITH_GOOGLE, {});
+            throw missingParameter('REDIRECT_URI');
         }
         window.location.href = `http://3k1.theydont.work/account/google?sdkId=${this.iceteaId.sdkId}&redirectUri=${redirectUri}`;
     }
 
     public logout(): ReturnType<any> {
-        return this.transporter.post(RequestType.LOG_OUT, {});
+        const payload = queryBuilder(RequestType.LOG_OUT, {});
+        return this.transporter.post(this.iframe, payload);
     }
 }

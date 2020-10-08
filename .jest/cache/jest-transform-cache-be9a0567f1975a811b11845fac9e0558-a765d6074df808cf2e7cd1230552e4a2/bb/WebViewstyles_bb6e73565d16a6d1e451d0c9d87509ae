@@ -1,0 +1,34 @@
+9494082bc0f2befd17072ca25d51bae0
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _reactNative = require("react-native");
+var styles = _reactNative.StyleSheet.create({
+  container: {
+    flex: 1,
+    overflow: 'hidden' },
+
+  loadingOrErrorView: {
+    position: 'absolute',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'white' },
+
+  loadingProgressBar: {
+    height: 20 },
+
+  errorText: {
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 2 },
+
+  errorTextTitle: {
+    fontSize: 15,
+    fontWeight: '500',
+    marginBottom: 10 },
+
+  webView: {
+    backgroundColor: '#ffffff' } });var _default =
+
+
+styles;exports.default = _default;
